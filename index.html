@@ -1299,7 +1299,6 @@ fbq('track', 'PageView');
         💬 카카오톡 채널로 신청 완료 알리기
       </a>
     </form>
-    <iframe name="af-hidden-iframe" id="af-hidden-iframe" style="display:none;"></iframe>
 
 
     <a href="https://naver.me/FBaKfz0P" id="link-1on1-2" class="link-soft reveal" onclick="fbq('track','Lead',{content_name:'1on1_link_final'});">로테이션이 부담스럽다면, 1:1 매칭부터</a>
@@ -1331,23 +1330,18 @@ fbq('track', 'PageView');
   const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyS-3H_157f84g5vMqKiUnOUWwl-Bs_3Cb0yVQLG2oY7jddf1r_TnifIQq1MC-4wycI/exec";
   (function(){
     const form = document.getElementById('apply-form');
-    const hiddenFrame = document.getElementById('af-hidden-iframe');
     const status = document.getElementById('af-status');
     const kakaoBtn = document.getElementById('af-kakao-cta');
-    if(!form || !hiddenFrame) return;
+    const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+    if(!form) return;
 
-    form.action = SHEET_WEB_APP_URL;
-    form.method = 'POST';
-    form.target = 'af-hidden-iframe';
-
-    let submitting = false;
-    let submittedName = '';
     form.addEventListener('submit', function(e){
+      e.preventDefault(); // fetch로 직접 전송하므로 기본 폼 제출은 항상 막음
+
       if(SHEET_WEB_APP_URL.indexOf('YOUR_APPS_SCRIPT') === 0){
         status.textContent = '⚠️ 아직 구글시트 연결이 설정되지 않았어요 (SHEET_WEB_APP_URL 확인)';
         status.style.color = 'var(--gold)';
         status.classList.add('show');
-        e.preventDefault();
         return;
       }
       const checkedSlots = Array.from(document.querySelectorAll('.af-timeslot-checkbox:checked')).map(el => el.value);
@@ -1355,24 +1349,36 @@ fbq('track', 'PageView');
         status.textContent = '가능하신 시간대를 최소 1개 이상 선택해주세요!';
         status.style.color = 'var(--gold)';
         status.classList.add('show');
-        e.preventDefault();
         return;
       }
       document.getElementById('af-dates-hidden').value = checkedSlots.join(', ');
       document.getElementById('af-sheet-month-hidden').value = CAL_YEAR + '.' + CAL_MONTH + '월';
-      submittedName = document.getElementById('af-name').value;
-      submitting = true;
-      fbq('track','Lead',{content_name:'apply_form_submit'});
-    });
 
-    hiddenFrame.addEventListener('load', function(){
-      if(!submitting) return;
-      submitting = false;
-      status.innerHTML = '신청해주셔서 감사해요! 🙌<br>아래 링크 카카오톡채널 \'위밋\'으로 <b>' + submittedName + '</b>님 성함과 함께 <b>\'로테이션 신청 완료\'</b>라고 꼭 보내주세요 :)';
-      status.style.color = 'var(--ivory)';
-      status.classList.add('show');
-      if(kakaoBtn) kakaoBtn.style.display = 'flex';
-      form.reset();
+      const submittedName = document.getElementById('af-name').value;
+      const formData = new FormData(form);
+
+      if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = '제출 중...'; }
+      status.textContent = '';
+      status.classList.remove('show');
+
+      fetch(SHEET_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      }).then(function(){
+        fbq('track','Lead',{content_name:'apply_form_submit'});
+        status.innerHTML = '신청해주셔서 감사해요! 🙌<br>아래 링크 카카오톡채널 \'위밋\'으로 <b>' + submittedName + '</b>님 성함과 함께 <b>\'로테이션 신청 완료\'</b>라고 꼭 보내주세요 :)';
+        status.style.color = 'var(--ivory)';
+        status.classList.add('show');
+        if(kakaoBtn) kakaoBtn.style.display = 'flex';
+        form.reset();
+        if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = '1차 신청 제출하기'; }
+      }).catch(function(){
+        status.textContent = '⚠️ 제출 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.';
+        status.style.color = 'var(--gold)';
+        status.classList.add('show');
+        if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = '1차 신청 제출하기'; }
+      });
     });
   })();
   // (a 태그의 href 기반 클릭은 미리보기에서 외부링크로 오인식될 수 있어 button 방식으로 전환함)
