@@ -144,10 +144,14 @@ fbq('track', 'PageView');
     gap:10px;
     background:var(--ivory);
     color:var(--bg-deep);
+    font-family:var(--sans);
     font-weight:700;
     font-size:15.5px;
     padding:16px 26px;
+    border:none;
     border-radius:var(--radius);
+    text-decoration:none;
+    cursor:pointer;
     transition:background 0.2s ease, transform 0.2s ease;
     width:100%;
     justify-content:center;
@@ -620,9 +624,14 @@ fbq('track', 'PageView');
     align-items:center;
     justify-content:center;
     font-size:12px;
+    font-family:var(--sans);
     color:var(--taupe);
     background:transparent;
+    border:none;
+    padding:0;
+    cursor:default;
   }
+  button.cal-cell{cursor:pointer;}
   .cal-cell.empty{visibility:hidden;}
   .cal-cell.has-event{
     background:rgba(192,57,43,0.1);
@@ -853,6 +862,94 @@ fbq('track', 'PageView');
     background:rgba(192,57,43,0.14);
     border-color:var(--gold);
   }
+
+  /* ---------- Native application form (Google Sheets 연동) ---------- */
+  .apply-form{
+    margin-top:28px;
+    padding:22px 20px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--bg-panel-alt);
+    text-align:left;
+  }
+  .apply-form .field{margin-bottom:14px;}
+  .apply-form label{
+    display:block;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ivory);
+    margin-bottom:6px;
+  }
+  .apply-form input[type="text"],
+  .apply-form input[type="tel"],
+  .apply-form input[type="number"],
+  .apply-form select{
+    width:100%;
+    padding:11px 12px;
+    font-size:14px;
+    font-family:var(--sans);
+    color:var(--ivory);
+    background:var(--bg-deep);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+  }
+  .apply-form .radio-row{display:flex; gap:10px;}
+  .apply-form .radio-row label{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:11px 0;
+    font-weight:600;
+    font-size:13.5px;
+    color:var(--taupe);
+    background:var(--bg-deep);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    cursor:pointer;
+  }
+  .apply-form .radio-row input{accent-color:var(--gold);}
+  .apply-form .radio-row input:checked + span{color:var(--gold);}
+  .apply-form small{
+    display:block;
+    font-size:11px;
+    color:var(--taupe);
+    margin-top:4px;
+  }
+  .apply-form button[type="submit"]{
+    width:100%;
+    margin-top:6px;
+    background:var(--ivory);
+    color:var(--bg-deep);
+    font-weight:700;
+    font-size:15px;
+    padding:14px;
+    border:none;
+    border-radius:var(--radius);
+    cursor:pointer;
+  }
+  .apply-form .form-status{
+    text-align:center;
+    font-size:13px;
+    margin-top:12px;
+    display:none;
+  }
+  .apply-form .form-status.show{display:block;}
+  .af-timeslot{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    background:var(--bg-deep);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    font-size:13px;
+    color:var(--taupe);
+    cursor:pointer;
+  }
+  .af-timeslot input{accent-color:var(--gold); flex-shrink:0;}
+  .af-timeslot input:checked ~ span{color:var(--ivory); font-weight:700;}
 </style>
 </head>
 <body>
@@ -863,6 +960,7 @@ fbq('track', 'PageView');
   <button onclick="document.getElementById('conditions').scrollIntoView({behavior:'smooth'})">참가조건</button>
   <button onclick="document.getElementById('coupons').scrollIntoView({behavior:'smooth'})">쿠폰</button>
   <button onclick="document.getElementById('calendar-section').scrollIntoView({behavior:'smooth'})">일정</button>
+  <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">질문</button>
 </nav>
 
 <div class="float-stack">
@@ -1035,7 +1133,7 @@ fbq('track', 'PageView');
         <div class="num">04</div>
         <div class="txt">
           <h3>매칭 결과 안내</h3>
-          <p>매칭 결과는 퇴장 후 1시간 내외로 발송해드려요. 매칭되신 분들은 최대한 빨리 좋은 인연 이어가셨으면 좋겠어요❤️ 매칭이 엇갈리셨더라도 투표 결과는 다 알려드린답니다!</p>
+          <p>이성과의 1:1 대화가 모두 끝나면 마음에 드는 이성 최대 2명을 선택하실 수 있어요. 투표 결과는 당일 30분 내외로 알려드려요. 서로 선택이 엇갈렸더라도 아쉽지 않게 이어질 수 있는 시스템을 마련해둬서, 커플이 될 확률이 더더욱 높아요! 매칭되신 분들은 최대한 빨리 좋은 인연 이어가셨으면 좋겠어요❤️</p>
         </div>
       </div>
     </div>
@@ -1062,7 +1160,25 @@ fbq('track', 'PageView');
   </div>
 </section>
 
-<section id="coupons">
+<section id="calendar-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">이번 달 일정</span>
+      <h2>날짜 눌러서 바로 신청하기</h2>
+    </div>
+    <div class="cal-head reveal">
+      <span id="cal-month-label">2026년 9월</span>
+    </div>
+    <div class="cal-grid reveal" id="cal-grid">
+      <!-- JS가 채워줌 -->
+    </div>
+    <p class="cal-legend reveal">• 표시된 날짜를 누르면 바로 신청폼으로 이동해요 · ★는 특집 이벤트예요</p>
+
+    <!-- 요일·시간대가 바뀌면 JS의 EVENT_TIMES / 요일 조건(dow===0||dow===6)만 수정하면 돼요 -->
+  </div>
+</section>
+
+<section class="alt" id="coupons">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">쿠폰</span>
@@ -1091,32 +1207,103 @@ fbq('track', 'PageView');
   </div>
 </section>
 
-<section class="alt" id="calendar-section">
+<section id="faq">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">이번 달 일정</span>
-      <h2>날짜 눌러서 바로 신청하기</h2>
+      <span class="eyebrow">자주 묻는 질문</span>
+      <h2>궁금한 점, 미리 풀고 가세요</h2>
     </div>
-    <div class="cal-head reveal">
-      <span id="cal-month-label">2026년 9월</span>
-    </div>
-    <div class="cal-grid reveal" id="cal-grid">
-      <!-- JS가 채워줌 -->
-    </div>
-    <p class="cal-legend reveal">• 표시된 날짜를 누르면 바로 신청폼으로 이동해요 · ★는 특집 이벤트예요</p>
 
-    <a href="https://naver.me/GrgblejV" class="btn-primary js-apply-link" style="margin-top:18px;" onclick="fbq('track','Lead',{content_name:'calendar_cta'});">
-      1분만에 신청하기
-      <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-    <!-- 요일·시간대가 바뀌면 JS의 EVENT_TIMES / 요일 조건(dow===0||dow===6)만 수정하면 돼요 -->
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">한 번에 몇 명이나 만나나요?<span class="plus">+</span></button>
+        <div class="faq-a"><p>6:6~8:8로 성비를 맞춰서 진행돼요. 갑자기 취소하시는 분이 생기면 대기자분들이나 이전 신청자분들로 채워서, 최대한 성비를 맞추려고 노력하고 있어요. 1:1로 모든 이성분들과 순서대로 만나며 10분~15분씩 대화해요.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">소요시간은 얼마나 걸리나요?<span class="plus">+</span></button>
+        <div class="faq-a"><p>만남부터 투표, 퇴장까지 1시간 50분 내외로 소요돼요.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">매칭 결과는 언제, 어떻게 알려주나요?<span class="plus">+</span></button>
+        <div class="faq-a"><p>1:1 대화가 모두 끝나면 마음에 드는 이성 최대 2명을 선택하실 수 있어요. 투표 결과는 당일 30분 내외로 알려드리고, 매칭되면 상대 연락처와 함께 안내드려요. 서로 선택이 엇갈렸더라도 아쉽지 않게 이어질 수 있는 시스템이 있어서, 커플이 될 확률이 더 높아요.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">왜 선정이 안 될까요?<span class="plus">+</span></button>
+        <div class="faq-a"><p>혹시 선정 연락을 못 받으셨어도 본인이 부족해서가 아니에요. 선착순이 아니라 실제 커플 성사율을 높이기 위한 방식이라, 연령대·취향·가치관 등등 잘 맞는 기수에 맞춰 나중에 연락드릴 수도 있어요. 위밋에서 연락드릴 수도 있지만 시간 되실 때 계속해서 더 신청해주시면 감사하겠습니다. 신청은 간단한 1차 설문지만 해주시면 돼요!</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">연령대는 정해서 모집하지 않나요?<span class="plus">+</span></button>
+        <div class="faq-a"><p>미리 연령대를 딱 정해버리면 나이 차이가 많이 나는 분들끼리 묶여서 겉돌 수 있고, 폭이 너무 넓어지면 소개팅 자체가 제대로 안 되는 경우가 많더라고요. 그래서 신청해주신 분들을 보고 또래끼리, 잘 맞을 만한 분들끼리 저희가 알아서 기수를 맞춰드려요. 나이 차이가 너무 나면 애초에 선정해드리지 않으니, 연령대 걱정 없이 일정만 보시고 편하게 신청해주셔도 괜찮아요.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">지인, 알바 쓰는 거 아닌가요?<span class="plus">+</span></button>
+        <div class="faq-a"><p>아니에요, 위밋은 업체 알바나 지인을 참가자로 쓰지 않아요. 라인업에 올라오는 분들은 전부 실제로 신청해주신 분들이에요. 서류·설문지로 꼼꼼히 확인하는 것도 이 진정성을 지키기 위해서예요.</p></div>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="final">
   <div class="wrap">
+    <h2 class="reveal">망설이는 사이에도,<br>누군가는 벌써 신청하고 있어요</h2>
+    <p class="reveal">이번 라인업, 놓치지 마세요.</p>
+
+    <form class="apply-form reveal" id="apply-form">
+      <div class="field">
+        <label for="af-name">이름</label>
+        <input type="text" id="af-name" name="이름" placeholder="예: 홍길동" required>
+      </div>
+      <div class="field">
+        <label>성별</label>
+        <div class="radio-row">
+          <label><input type="radio" name="성별" value="남성" required><span>남성</span></label>
+          <label><input type="radio" name="성별" value="여성"><span>여성</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>가능하신 시간대를 모두 선택해주세요 :)</label>
+        <p style="font-size:12px; color:var(--taupe); line-height:1.6; margin-bottom:10px;">위밋은 처음부터 나이대를 정해서 모집하지 않아요. 나이대는 저희가 알아서 맞춰드립니다 :) 신청 시 적어주신 선호 연령대, 이상형, 가치관을 꼼꼼히 검토한 뒤 서로에게 가장 잘 어울리는 분들끼리 자리를 만들어드려요. 그래서 가능한 시간대를 최대한 많이 선택해주실수록 나에게 딱 맞는 자리에 더 빨리 배정받을 수 있어요!</p>
+        <div id="af-timeslots-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+        <input type="hidden" id="af-dates-hidden" name="날짜">
+        <input type="hidden" id="af-sheet-month-hidden" name="시트월">
+      </div>
+      <div class="field">
+        <label for="af-birth">출생연도</label>
+        <input type="number" id="af-birth" name="출생연도" placeholder="예: 1995" min="1970" max="2008" required>
+      </div>
+      <div class="field">
+        <label for="af-height">키 (cm)</label>
+        <input type="number" id="af-height" name="키" placeholder="예: 175" required>
+      </div>
+      <div class="field">
+        <label for="af-phone">연락처</label>
+        <input type="tel" id="af-phone" name="연락처" placeholder="010-0000-0000" required>
+        <small>정확히 기재해주세요! 연락 못 드려요.</small>
+      </div>
+      <div class="field">
+        <div style="background:var(--bg-deep); border:1px solid var(--line); border-radius:var(--radius); padding:14px 14px; font-size:11.5px; color:var(--taupe); line-height:1.7; margin-bottom:10px;">
+          <strong style="color:var(--ivory); display:block; margin-bottom:6px;">개인정보 수집 및 이용 동의</strong>
+          동의를 거부하실 수 있으나 설문 참여가 불가능합니다.<br>
+          · 수집 항목: 이름, 연락처, 거주지, 직장, 사진, 주민등록증, 재직증명서 또는 사업자등록증 등의 서류<br>
+          · 수집·이용 목적: 신청 및 예약 등 고객 요청 처리 및 결과 회신<br>
+          · 보유·이용 기간: 신청 시 수집된 개인정보는 모임 신청일 기준 1년 후 자동 파기
+        </div>
+        <label class="radio-row" style="align-items:flex-start;">
+          <input type="checkbox" name="통합동의" value="동의" required style="margin-top:2px;">
+          <span style="color:var(--taupe); font-weight:400; text-align:left;">위 개인정보 수집·이용에 동의하며, 추후 본인사진 / 신분증 / 직업 확인 추가자료 / 이상형 관련 추가 질문에도 동의합니다</span>
+        </label>
+      </div>
+      <button type="submit">1차 신청 제출하기</button>
+      <p class="form-status" id="af-status"></p>
+      <a href="https://pf.kakao.com/_NCgxmn/friend" target="_blank" rel="noopener" id="af-kakao-cta" class="btn-primary" style="display:none; margin-top:12px; background:#FEE500; color:#3A1D1D;">
+        💬 카카오톡 채널로 신청 완료 알리기
+      </a>
+    </form>
+    <iframe name="af-hidden-iframe" id="af-hidden-iframe" style="display:none;"></iframe>
+
+
     <a href="https://naver.me/FBaKfz0P" id="link-1on1-2" class="link-soft reveal" onclick="fbq('track','Lead',{content_name:'1on1_link_final'});">로테이션이 부담스럽다면, 1:1 매칭부터</a>
-    <p class="reveal" style="margin-top:28px; font-size:12.5px; color:var(--taupe); line-height:1.7;">P.S. 고민만 하다가 좋은 자리를 놓칠 수 있어요. 신청부터 해두고, 고민은 나중에 천천히 하셔도 괜찮아요.</p>
+    <p class="reveal" style="margin-top:28px; font-size:12.5px; color:var(--taupe); line-height:1.7;">P.S. 고민만 하다가 좋은 자리를 놓칠 수 있어요. 신청하셔도 괜찮은 자리가 안 될 것 같으면 선정해드리지 않으니 걱정하지 마세요.</p>
   </div>
 </section>
 
@@ -1128,17 +1315,67 @@ fbq('track', 'PageView');
 </footer>
 
 <div class="sticky-cta">
-  <a href="https://naver.me/GrgblejV" class="btn-primary js-apply-link" onclick="fbq('track','Lead',{content_name:'sticky_cta'});">
-    1분만에 신청하기
+  <button type="button" class="btn-primary" onclick="fbq('track','Lead',{content_name:'sticky_cta'}); document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">
+    30초만에 신청하기
     <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </a>
+  </button>
 </div>
 
 <script>
   // ===== 신청폼 링크 중앙관리 =====
   // 노션폼으로 바뀌면 이 한 줄만 바꾸면 히어로 CTA·최종 CTA·달력 일정이 전부 같이 바뀜
-  const APPLY_URL = "https://naver.me/GrgblejV";
-  document.querySelectorAll('.js-apply-link').forEach(el => el.href = APPLY_URL);
+  // 네이버폼 링크는 더 이상 안 써요 — CTA들은 이제 페이지 내 신청폼(#apply-form)으로 스크롤됩니다
+
+  // ===== 1차 신청폼 → 구글시트 전송 =====
+  // 아래 SHEET_WEB_APP_URL 자리에, 구글 앱스 스크립트 배포 후 나오는 웹앱 URL을 넣으세요.
+  const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyS-3H_157f84g5vMqKiUnOUWwl-Bs_3Cb0yVQLG2oY7jddf1r_TnifIQq1MC-4wycI/exec";
+  (function(){
+    const form = document.getElementById('apply-form');
+    const hiddenFrame = document.getElementById('af-hidden-iframe');
+    const status = document.getElementById('af-status');
+    const kakaoBtn = document.getElementById('af-kakao-cta');
+    if(!form || !hiddenFrame) return;
+
+    form.action = SHEET_WEB_APP_URL;
+    form.method = 'POST';
+    form.target = 'af-hidden-iframe';
+
+    let submitting = false;
+    let submittedName = '';
+    form.addEventListener('submit', function(e){
+      if(SHEET_WEB_APP_URL.indexOf('YOUR_APPS_SCRIPT') === 0){
+        status.textContent = '⚠️ 아직 구글시트 연결이 설정되지 않았어요 (SHEET_WEB_APP_URL 확인)';
+        status.style.color = 'var(--gold)';
+        status.classList.add('show');
+        e.preventDefault();
+        return;
+      }
+      const checkedSlots = Array.from(document.querySelectorAll('.af-timeslot-checkbox:checked')).map(el => el.value);
+      if(checkedSlots.length === 0){
+        status.textContent = '가능하신 시간대를 최소 1개 이상 선택해주세요!';
+        status.style.color = 'var(--gold)';
+        status.classList.add('show');
+        e.preventDefault();
+        return;
+      }
+      document.getElementById('af-dates-hidden').value = checkedSlots.join(', ');
+      document.getElementById('af-sheet-month-hidden').value = CAL_YEAR + '.' + CAL_MONTH + '월';
+      submittedName = document.getElementById('af-name').value;
+      submitting = true;
+      fbq('track','Lead',{content_name:'apply_form_submit'});
+    });
+
+    hiddenFrame.addEventListener('load', function(){
+      if(!submitting) return;
+      submitting = false;
+      status.innerHTML = '신청해주셔서 감사해요! 🙌<br>아래 링크 카카오톡채널 \'위밋\'으로 <b>' + submittedName + '</b>님 성함과 함께 <b>\'로테이션 신청 완료\'</b>라고 꼭 보내주세요 :)';
+      status.style.color = 'var(--ivory)';
+      status.classList.add('show');
+      if(kakaoBtn) kakaoBtn.style.display = 'flex';
+      form.reset();
+    });
+  })();
+  // (a 태그의 href 기반 클릭은 미리보기에서 외부링크로 오인식될 수 있어 button 방식으로 전환함)
 
   // ===== 이번 달 일정 (매주 토·일 14:00 / 17:00 자동 생성) =====
   const CAL_YEAR = 2026;
@@ -1147,15 +1384,11 @@ fbq('track', 'PageView');
   const EVENT_TIMES = ["14:00", "17:00"];
   const EVENTS = {};
   (function buildEvents(){
-    const daysInMonth = new Date(CAL_YEAR, CAL_MONTH, 0).getDate();
-    for(let d=1; d<=daysInMonth; d++){
-      const dow = new Date(CAL_YEAR, CAL_MONTH-1, d).getDay(); // 0=일, 6=토
-      if(dow === 0 || dow === 6){
-        EVENTS[d] = EVENT_TIMES.map(t => ({time:t}));
-      }
-    }
-    // ---- 예외 처리 (여기서 날짜별로 조정) ----
-    delete EVENTS[6]; // 9/6(일) 일정 없음
+    // 최근 2주치만 노출 — 날짜 목록만 바꾸면 다음 2주로 갱신 가능
+    const activeDays = [12, 13, 19, 20];
+    activeDays.forEach(d => {
+      EVENTS[d] = EVENT_TIMES.map(t => ({time:t}));
+    });
     if(EVENTS[13]){
       EVENTS[13] = EVENTS[13].map(ev => ev.time === '14:00' ? {time:ev.time, special:'외모특집'} : ev);
     }
@@ -1183,14 +1416,18 @@ fbq('track', 'PageView');
     }
 
     for(let d=1; d<=daysInMonth; d++){
-      const cell = document.createElement(EVENTS[d] ? 'a' : 'div');
+      const cell = document.createElement(EVENTS[d] ? 'button' : 'div');
       cell.className = 'cal-cell';
       const hasSpecial = EVENTS[d] && EVENTS[d].some(ev => ev.special);
       if(EVENTS[d]){
+        cell.type = 'button';
         cell.classList.add('has-event');
         if(hasSpecial) cell.classList.add('has-special');
-        cell.href = APPLY_URL;
-        cell.onclick = () => fbq('track','Lead',{content_name:'calendar_'+CAL_MONTH+'-'+d});
+        cell.onclick = () => {
+          fbq('track','Lead',{content_name:'calendar_'+CAL_MONTH+'-'+d});
+          const formEl = document.getElementById('apply-form');
+          if(formEl) formEl.scrollIntoView({behavior:'smooth'});
+        };
       }
       const num = document.createElement('span');
       num.textContent = d;
@@ -1211,6 +1448,24 @@ fbq('track', 'PageView');
     }
   }
   renderCalendar();
+
+  // ===== 신청폼의 "가능한 시간대" 체크박스 목록 — 캘린더 EVENTS 데이터 재사용 =====
+  function populateApplyTimeslots(){
+    const list = document.getElementById('af-timeslots-list');
+    if(!list) return;
+    const dowNames = ['일','월','화','수','목','금','토'];
+    Object.keys(EVENTS).sort((a,b)=>a-b).forEach(day => {
+      const dow = new Date(CAL_YEAR, CAL_MONTH-1, Number(day)).getDay();
+      EVENTS[day].forEach(ev => {
+        const labelText = CAL_MONTH + '/' + day + '(' + dowNames[dow] + ') ' + ev.time + (ev.special ? ' · ' + ev.special : '');
+        const wrap = document.createElement('label');
+        wrap.className = 'af-timeslot';
+        wrap.innerHTML = '<input type="checkbox" class="af-timeslot-checkbox" value="' + labelText + '"><span>' + labelText + '</span>';
+        list.appendChild(wrap);
+      });
+    });
+  }
+  populateApplyTimeslots();
 
   // ===== FAQ 아코디언 =====
   function toggleFaq(btn){
