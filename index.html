@@ -1407,13 +1407,10 @@ fbq('track', 'PageView');
   const EVENTS = {};
   (function buildEvents(){
     // 최근 2주치만 노출 — 날짜 목록만 바꾸면 다음 2주로 갱신 가능
-    const activeDays = [12, 13, 19, 20];
+    const activeDays = [19, 20, 26, 27];
     activeDays.forEach(d => {
       EVENTS[d] = EVENT_TIMES.map(t => ({time:t}));
     });
-    if(EVENTS[13]){
-      EVENTS[13] = EVENTS[13].map(ev => ev.time === '14:00' ? {time:ev.time, special:'외모특집'} : ev);
-    }
   })();
 
   document.getElementById('cal-month-label').textContent = CAL_MONTH_LABEL;
