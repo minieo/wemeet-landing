@@ -1422,7 +1422,17 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         return;
       }
       document.getElementById('af-dates-hidden').value = checkedSlots.join(', ');
-      document.getElementById('af-sheet-month-hidden').value = CAL_YEAR + '.' + CAL_MONTH + '월';
+      // 시트월: 선택한 시간대 중 가장 빠른 달 기준 (예: '9/26(토) 14:00' → 2026.9월). 대기신청만 선택하면 가장 빠른 신청 가능 달로 기본 지정
+      (function(){
+        var picked = checkedSlots.map(function(v){ var mm = /^(\d{1,2})\//.exec(v); return mm ? parseInt(mm[1],10) : null; }).filter(function(n){ return n !== null; });
+        var target = null;
+        if(picked.length){
+          var minMonth = Math.min.apply(null, picked);
+          target = MONTHS.filter(function(m){ return m.month === minMonth; })[0] || null;
+        }
+        if(!target){ target = MONTHS.filter(function(m){ return (m.bookableDays || []).length > 0; })[0] || MONTHS[0]; }
+        document.getElementById('af-sheet-month-hidden').value = target.year + '.' + target.month + '월';
+      })();
       const waitlistBox = document.getElementById('af-waitlist-checkbox');
       document.getElementById('af-waitlist-hidden').value = (waitlistBox && waitlistBox.checked) ? 'Y' : '';
 
