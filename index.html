@@ -958,6 +958,94 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     display:none;
   }
   .apply-form .form-status.show{display:block;}
+
+  /* ===== 신청 완료 카드 (제출 후 표시) ===== */
+  .af-done{
+    display:none;
+    text-align:center;
+    background:#fff;
+    border:2px solid var(--gold);
+    border-radius:8px;
+    padding:30px 18px 22px;
+    scroll-margin-top:20px;
+  }
+  .af-done-badge{
+    display:inline-block;
+    background:var(--ivory);
+    color:var(--bg-deep);
+    font-size:12px; font-weight:700; letter-spacing:.02em;
+    padding:6px 12px; border-radius:999px;
+    margin-bottom:14px;
+  }
+  .af-done-title{
+    font-size:24px; line-height:1.3; font-weight:800;
+    color:var(--gold);
+    margin:0 0 10px;
+  }
+  .af-done-lead{
+    font-size:15px; line-height:1.65; color:var(--ivory) !important;
+    margin:0 0 16px;
+  }
+  .af-done-lead strong{ background:linear-gradient(transparent 60%, rgba(254,229,0,.75) 60%); }
+  .af-done-msgbox{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--bg-deep);
+    border:1.5px dashed var(--gold);
+    border-radius:6px;
+    padding:12px 12px 12px 14px;
+    margin:0 0 14px;
+    text-align:left;
+  }
+  .af-done-msgbox span{
+    font-size:16px; font-weight:800; color:var(--ivory); word-break:keep-all; line-height:1.4;
+  }
+  .af-done-msgbox button{
+    flex:none;
+    background:var(--ivory); color:var(--bg-deep);
+    border:0; border-radius:4px;
+    font-size:13px; font-weight:700;
+    padding:9px 14px; cursor:pointer;
+  }
+  .af-done-kakao{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background:#FEE500; color:#3A1D1D;
+    font-size:17px; font-weight:800;
+    padding:18px 12px;
+    border-radius:8px;
+    text-decoration:none;
+    box-shadow:0 0 0 4px rgba(254,229,0,.35);
+    animation:afPulse 1.8s ease-in-out infinite;
+  }
+  .af-done-logo{
+    width:40px; height:40px; flex:none;
+    border-radius:50%; background:#fff;
+    padding:3px; box-sizing:border-box; object-fit:contain;
+    box-shadow:0 1px 3px rgba(58,29,29,.25);
+  }
+  @keyframes afPulse{
+    0%,100%{ box-shadow:0 0 0 3px rgba(254,229,0,.35); }
+    50%{ box-shadow:0 0 0 8px rgba(254,229,0,.18); }
+  }
+  .af-done-steps{
+    text-align:left; margin:16px auto 0; padding:0 0 0 20px;
+    font-size:13.5px; line-height:1.8; color:#5b524a;
+    max-width:320px;
+  }
+  .af-done-warn{
+    margin:14px 0 0; font-size:13.5px; font-weight:800; color:var(--gold) !important;
+  }
+  .af-done-friend{
+    margin-top:22px; padding-top:20px;
+    border-top:1px solid var(--line);
+  }
+  .af-done-friend p{
+    margin:0 0 10px; font-size:13px; line-height:1.65; color:#5b524a !important;
+  }
+  .af-done-again{
+    background:#fff; border:1.5px solid var(--ivory); border-radius:6px;
+    font-size:14px; font-weight:700; color:var(--ivory);
+    padding:12px 18px; cursor:pointer;
+  }
   .af-timeslot{
     display:flex;
     align-items:center;
@@ -1370,6 +1458,27 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       </a>
     </form>
 
+    <div id="af-done" class="af-done" role="status" aria-live="polite">
+      <h3 class="af-done-title">다음 단계가 남았어요!</h3>
+      <p class="af-done-lead">카카오톡 채널에 아래 문구를 보내주셔야<br><strong>참여가 가능</strong>해요.</p>
+      <div class="af-done-msgbox">
+        <span id="af-done-msg"></span>
+        <button type="button" id="af-done-copy">복사</button>
+      </div>
+      <a href="https://pf.kakao.com/_NCgxmn/friend" target="_blank" rel="noopener" id="af-done-kakao" class="af-done-kakao">
+        <img class="af-done-logo" src="data:image/png;base64,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" alt="위밋" width="40" height="40">
+        <span>위밋 카카오톡 채널 열기</span>
+      </a>
+      <ol class="af-done-steps">
+        <li>위 노란 버튼을 눌러 채널을 열어요</li>
+        <li>채팅창에 <b>붙여넣기</b> (입력창 길게 누르기)</li>
+        <li>전송하면 완료!</li>
+      </ol>
+      <div class="af-done-friend">
+        <button type="button" id="af-done-again" class="af-done-again">친구도 함께 신청하기</button>
+      </div>
+    </div>
+
 
     <a href="https://naver.me/FBaKfz0P" id="link-1on1-2" class="link-soft reveal" onclick="fbq('track','Lead',{content_name:'1on1_link_final'});">로테이션이 부담스럽다면, 1:1 매칭부터</a>
     <p class="reveal" style="margin-top:28px; font-size:12.5px; color:var(--taupe); line-height:1.7;">P.S. 고민만 하다가 좋은 자리를 놓칠 수 있어요. 신청하셔도 괜찮은 자리가 안 될 것 같으면 선정해드리지 않으니 걱정하지 마세요.</p>
@@ -1404,6 +1513,50 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     const kakaoBtn = document.getElementById('af-kakao-cta');
     const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
     if(!form) return;
+
+    // ===== 제출 완료 카드 =====
+    const doneBox = document.getElementById('af-done');
+    const stickyCta = document.querySelector('.sticky-cta');
+    function copyText(text){
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).catch(function(){});
+          return;
+        }
+      }catch(e){}
+      try{
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }catch(e){}
+    }
+    function showApplyDone(name){
+      const msg = name + ' 로테이션 신청 완료';
+      document.getElementById('af-done-msg').textContent = msg;
+      doneBox.dataset.msg = msg;
+      status.classList.remove('show');
+      form.style.display = 'none';
+      doneBox.style.display = 'block';
+      if(stickyCta) stickyCta.style.display = 'none';
+      setTimeout(function(){ doneBox.scrollIntoView({behavior:'smooth', block:'center'}); }, 50);
+    }
+    document.getElementById('af-done-copy').addEventListener('click', function(){
+      copyText(doneBox.dataset.msg || '');
+      const btn = this; btn.textContent = '복사됨 ✓';
+      setTimeout(function(){ btn.textContent = '복사'; }, 1800);
+    });
+    document.getElementById('af-done-kakao').addEventListener('click', function(){
+      copyText(doneBox.dataset.msg || '');
+      fbq('trackCustom','ApplyChannelClick',{content_name:'apply_done_channel'});
+    });
+    document.getElementById('af-done-again').addEventListener('click', function(){
+      doneBox.style.display = 'none';
+      form.style.display = '';
+      if(stickyCta) stickyCta.style.display = '';
+      form.scrollIntoView({behavior:'smooth'});
+    });
 
     form.addEventListener('submit', function(e){
       e.preventDefault(); // fetch로 직접 전송하므로 기본 폼 제출은 항상 막음
@@ -1449,10 +1602,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         body: formData
       }).then(function(){
         fbq('track','CompleteRegistration',{content_name:'apply_form_submit'});
-        status.innerHTML = '신청해주셔서 감사해요! 🙌<br>아래 링크 카카오톡채널 \'위밋\'으로 <b>' + submittedName + '</b>님 성함과 함께 <b>\'로테이션 신청 완료\'</b>라고 꼭 보내주세요 :)';
-        status.style.color = 'var(--ivory)';
-        status.classList.add('show');
-        if(kakaoBtn) kakaoBtn.style.display = 'flex';
+        showApplyDone(submittedName);
         form.reset();
         if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = '1차 신청 제출하기'; }
       }).catch(function(){
