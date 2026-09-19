@@ -22,7 +22,7 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'YOUR_PIXEL_ID');
+fbq('init', '1377010317496207');
 fbq('track', 'PageView');
 </script>
 
@@ -968,19 +968,19 @@ fbq('track', 'PageView');
 </nav>
 
 <div class="float-stack">
-  <a class="float-btn" href="https://m.blog.naver.com/almin22" target="_blank" rel="noopener" onclick="fbq('track','Lead',{content_name:'float_blog'});">
+  <a class="float-btn" href="https://m.blog.naver.com/almin22" target="_blank" rel="noopener" onclick="fbq('trackCustom','BlogClick',{content_name:'float_blog'});">
     <span class="circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h4"/></svg></span>
     <span class="label">블로그</span>
   </a>
-  <a class="float-btn" href="https://www.instagram.com/wemeet_now?igsi=dXp3ZHI2djRibmFu&utm_source=qr" target="_blank" rel="noopener" onclick="fbq('track','Lead',{content_name:'float_insta'});">
+  <a class="float-btn" href="https://www.instagram.com/wemeet_now?igsi=dXp3ZHI2djRibmFu&utm_source=qr" target="_blank" rel="noopener" onclick="fbq('trackCustom','InstaClick',{content_name:'float_insta'});">
     <span class="circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg></span>
     <span class="label">인스타</span>
   </a>
-  <a class="float-btn" href="https://open.kakao.com/o/gg1WAxOh" target="_blank" rel="noopener" onclick="fbq('track','Lead',{content_name:'float_opentalk'});">
+  <a class="float-btn" href="https://open.kakao.com/o/gg1WAxOh" target="_blank" rel="noopener" onclick="fbq('trackCustom','OpenTalkClick',{content_name:'float_opentalk'});">
     <span class="circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="10" r="3.2"/><circle cx="16" cy="11" r="2.6"/><path d="M3.5 18c.6-2.6 2.6-4 5.5-4s4.9 1.4 5.5 4"/><path d="M13 18c.4-1.9 1.9-3 4-3s3.4 1 3.8 3"/></svg></span>
     <span class="label">단톡방</span>
   </a>
-  <a class="float-btn" href="http://pf.kakao.com/_NCgxmn/friend" target="_blank" rel="noopener" onclick="fbq('track','Lead',{content_name:'float_channel'});">
+  <a class="float-btn" href="http://pf.kakao.com/_NCgxmn/friend" target="_blank" rel="noopener" onclick="fbq('track','Contact',{content_name:'float_channel'});">
     <span class="circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-4 4V5z"/></svg></span>
     <span class="label">문의</span>
   </a>
@@ -1352,7 +1352,7 @@ fbq('track', 'PageView');
 
 <footer>
   <div class="wrap">
-    <p class="kakao">궁금한 거 있으면 편하게 카카오채널로 물어보세요 — <a href="https://pf.kakao.com/_NCgxmn/friend" target="_blank" rel="noopener">위밋 채널 바로가기</a></p>
+    <p class="kakao">궁금한 거 있으면 편하게 카카오채널로 물어보세요 — <a href="https://pf.kakao.com/_NCgxmn/friend" target="_blank" rel="noopener" onclick="fbq('track','Contact',{content_name:'footer_channel'});">위밋 채널 바로가기</a></p>
     <p class="brand">WE.MEET</p>
   </div>
 </footer>
@@ -1412,7 +1412,7 @@ fbq('track', 'PageView');
         mode: 'no-cors',
         body: formData
       }).then(function(){
-        fbq('track','Lead',{content_name:'apply_form_submit'});
+        fbq('track','CompleteRegistration',{content_name:'apply_form_submit'});
         status.innerHTML = '신청해주셔서 감사해요! 🙌<br>아래 링크 카카오톡채널 \'위밋\'으로 <b>' + submittedName + '</b>님 성함과 함께 <b>\'로테이션 신청 완료\'</b>라고 꼭 보내주세요 :)';
         status.style.color = 'var(--ivory)';
         status.classList.add('show');
