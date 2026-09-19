@@ -25,6 +25,9 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '1377010317496207');
 fbq('track', 'PageView');
 </script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
+/></noscript>
 
 <style>
   :root{
@@ -650,6 +653,21 @@ fbq('track', 'PageView');
     position:relative;
   }
   .cal-cell.has-special .times{color:var(--bg-deep);}
+  .cal-cell.upcoming{
+    background:transparent;
+    border:1px dashed var(--taupe);
+    color:var(--taupe);
+    opacity:0.7;
+  }
+  .cal-cell.upcoming .times{color:var(--taupe);}
+  .cal-cell.closed{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--taupe);
+    opacity:0.45;
+    text-decoration:line-through;
+  }
+  .cal-cell.closed .times{color:var(--taupe); text-decoration:line-through;}
   .cal-cell .special-star{
     position:absolute;
     top:2px; right:3px;
@@ -1201,7 +1219,15 @@ fbq('track', 'PageView');
     <div class="cal-grid reveal" id="cal-grid">
       <!-- JS가 채워줌 -->
     </div>
-    <p class="cal-legend reveal">• 표시된 날짜를 누르면 바로 신청폼으로 이동해요 · ★는 특집 이벤트예요</p>
+
+    <div class="cal-head reveal" style="margin-top:36px;">
+      <span id="cal-month-label-2">2026년 10월</span>
+    </div>
+    <div class="cal-grid reveal" id="cal-grid-2">
+      <!-- JS가 채워줌 -->
+    </div>
+
+    <p class="cal-legend reveal">• 진하게 표시된 날짜는 지금 바로 신청 가능해요 (누르면 신청폼으로 이동) · 점선으로 흐리게 표시된 날짜는 추후 신청 예정이에요 · 취소선으로 표시된 날짜는 마감됐어요 · ★는 특집 이벤트예요</p>
 
     <!-- 요일·시간대가 바뀌면 JS의 EVENT_TIMES / 요일 조건(dow===0||dow===6)만 수정하면 돼요 -->
   </div>
@@ -1429,24 +1455,58 @@ fbq('track', 'PageView');
   })();
   // (a 태그의 href 기반 클릭은 미리보기에서 외부링크로 오인식될 수 있어 button 방식으로 전환함)
 
-  // ===== 이번 달 일정 (매주 토·일 14:00 / 17:00 자동 생성) =====
-  const CAL_YEAR = 2026;
-  const CAL_MONTH = 9; // 1~12
-  const CAL_MONTH_LABEL = "2026년 9월";
-  const EVENT_TIMES = ["14:00", "17:00"];
-  const EVENTS = {};
-  (function buildEvents(){
-    // 최근 2주치만 노출 — 날짜 목록만 바꾸면 다음 2주로 갱신 가능
-    const activeDays = [19, 20, 26, 27];
-    activeDays.forEach(d => {
-      EVENTS[d] = EVENT_TIMES.map(t => ({time:t}));
+  // ===== 일정 캘린더: 9월 잔여분 + 10월 =====
+  // 날짜/시간이 바뀌면 아래 MONTHS 배열의 activeDays / bookableDays / closedDays / times / specials만 수정하면 돼요.
+  // - activeDays: 캘린더에 "일정으로" 표시할 모든 날짜
+  // - bookableDays: 그중 지금 신청서에서 실제로 고를 수 있는 날짜 (activeDays의 부분집합)
+  //   -> bookableDays에도 closedDays에도 없는 날짜는 캘린더에 흐리게 "예정"으로만 보여요 (아직 신청 안 열림)
+  // - closedDays: 이미 마감된 날짜 (activeDays의 부분집합) — "마감"으로 표시, 클릭 불가, 신청폼에도 안 나옴
+  // - specials: { day: { "시간": "특집 이름" } } — 해당 날짜·시간에 ★ 특집 표시
+  const MONTHS = [
+    {
+      year: 2026, month: 9, label: "2026년 9월",
+      gridId: "cal-grid", labelId: "cal-month-label",
+      activeDays: [5, 6, 12, 13, 19, 20, 26, 27],
+      bookableDays: [26, 27],
+      closedDays: [5, 6, 12, 13, 19, 20],
+      times: ["14:00", "17:00"],
+      specials: { 27: { "14:00": "비흡연자 특집" } }
+    },
+    {
+      year: 2026, month: 10, label: "2026년 10월",
+      gridId: "cal-grid-2", labelId: "cal-month-label-2",
+      activeDays: [3, 4, 10, 11, 17, 18, 24, 25, 31],
+      bookableDays: [3, 4],
+      closedDays: [],
+      times: ["14:00", "17:00"]
+    }
+  ];
+
+  const ALL_EVENTS = []; // 신청폼 "가능한 시간대" 체크박스용 { year, month, day, dow, time, special } — bookableDays만 포함
+
+  function buildMonthEvents(m){
+    const events = {};
+    m.activeDays.forEach(d => {
+      const bookable = m.bookableDays.includes(d);
+      const closed = (m.closedDays || []).includes(d);
+      events[d] = m.times.map(t => ({
+        time: t,
+        bookable,
+        closed,
+        special: (m.specials && m.specials[d] && m.specials[d][t]) || null
+      }));
+      if(bookable){
+        const dow = new Date(m.year, m.month-1, d).getDay();
+        events[d].forEach(ev => ALL_EVENTS.push({year:m.year, month:m.month, day:d, dow, time:ev.time, special:ev.special}));
+      }
     });
-  })();
+    return events;
+  }
 
-  document.getElementById('cal-month-label').textContent = CAL_MONTH_LABEL;
-
-  function renderCalendar(){
-    const grid = document.getElementById('cal-grid');
+  function renderCalendar(m){
+    const events = buildMonthEvents(m);
+    document.getElementById(m.labelId).textContent = m.label;
+    const grid = document.getElementById(m.gridId);
     const dows = ['일','월','화','수','목','금','토'];
     dows.forEach(d => {
       const el = document.createElement('div');
@@ -1455,8 +1515,8 @@ fbq('track', 'PageView');
       grid.appendChild(el);
     });
 
-    const firstDay = new Date(CAL_YEAR, CAL_MONTH-1, 1).getDay();
-    const daysInMonth = new Date(CAL_YEAR, CAL_MONTH, 0).getDate();
+    const firstDay = new Date(m.year, m.month-1, 1).getDay();
+    const daysInMonth = new Date(m.year, m.month, 0).getDate();
 
     for(let i=0; i<firstDay; i++){
       const empty = document.createElement('div');
@@ -1465,26 +1525,35 @@ fbq('track', 'PageView');
     }
 
     for(let d=1; d<=daysInMonth; d++){
-      const cell = document.createElement(EVENTS[d] ? 'button' : 'div');
+      const dayEvents = events[d];
+      const isBookable = dayEvents && dayEvents.some(ev => ev.bookable);
+      const isClosed = dayEvents && dayEvents.some(ev => ev.closed);
+      const cell = document.createElement(isBookable ? 'button' : 'div');
       cell.className = 'cal-cell';
-      const hasSpecial = EVENTS[d] && EVENTS[d].some(ev => ev.special);
-      if(EVENTS[d]){
-        cell.type = 'button';
-        cell.classList.add('has-event');
-        if(hasSpecial) cell.classList.add('has-special');
-        cell.onclick = () => {
-          fbq('track','Lead',{content_name:'calendar_'+CAL_MONTH+'-'+d});
-          const formEl = document.getElementById('apply-form');
-          if(formEl) formEl.scrollIntoView({behavior:'smooth'});
-        };
+      const hasSpecial = dayEvents && dayEvents.some(ev => ev.special);
+      if(dayEvents){
+        if(isBookable){
+          cell.type = 'button';
+          cell.classList.add('has-event');
+          if(hasSpecial) cell.classList.add('has-special');
+          cell.onclick = () => {
+            fbq('track','Lead',{content_name:'calendar_'+m.month+'-'+d});
+            const formEl = document.getElementById('apply-form');
+            if(formEl) formEl.scrollIntoView({behavior:'smooth'});
+          };
+        } else if(isClosed){
+          cell.classList.add('closed');
+        } else {
+          cell.classList.add('upcoming');
+        }
       }
       const num = document.createElement('span');
       num.textContent = d;
       cell.appendChild(num);
-      if(EVENTS[d]){
+      if(dayEvents){
         const times = document.createElement('span');
         times.className = 'times';
-        times.textContent = EVENTS[d].map(ev => ev.time.split(':')[0]+'시').join('·');
+        times.textContent = isClosed ? '마감' : dayEvents.map(ev => ev.time.split(':')[0]+'시').join('·');
         cell.appendChild(times);
       }
       if(hasSpecial){
@@ -1496,23 +1565,23 @@ fbq('track', 'PageView');
       grid.appendChild(cell);
     }
   }
-  renderCalendar();
+  MONTHS.forEach(renderCalendar);
 
-  // ===== 신청폼의 "가능한 시간대" 체크박스 목록 — 캘린더 EVENTS 데이터 재사용 =====
+  // ===== 신청폼의 "가능한 시간대" 체크박스 목록 — 위 ALL_EVENTS 재사용 =====
   function populateApplyTimeslots(){
     const list = document.getElementById('af-timeslots-list');
     if(!list) return;
     const dowNames = ['일','월','화','수','목','금','토'];
-    Object.keys(EVENTS).sort((a,b)=>a-b).forEach(day => {
-      const dow = new Date(CAL_YEAR, CAL_MONTH-1, Number(day)).getDay();
-      EVENTS[day].forEach(ev => {
-        const labelText = CAL_MONTH + '/' + day + '(' + dowNames[dow] + ') ' + ev.time + (ev.special ? ' · ' + ev.special : '');
+    ALL_EVENTS
+      .slice()
+      .sort((a,b) => (a.month-b.month) || (a.day-b.day) || a.time.localeCompare(b.time))
+      .forEach(ev => {
+        const labelText = ev.month + '/' + ev.day + '(' + dowNames[ev.dow] + ') ' + ev.time + (ev.special ? ' · ' + ev.special : '');
         const wrap = document.createElement('label');
         wrap.className = 'af-timeslot';
         wrap.innerHTML = '<input type="checkbox" class="af-timeslot-checkbox" value="' + labelText + '"><span>' + labelText + '</span>';
         list.appendChild(wrap);
       });
-    });
   }
   populateApplyTimeslots();
 
