@@ -1302,16 +1302,9 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       <h2>날짜 눌러서 바로 신청하기</h2>
     </div>
     <div class="cal-head reveal">
-      <span id="cal-month-label">2026년 9월</span>
+      <span id="cal-month-label">2026년 10월</span>
     </div>
     <div class="cal-grid reveal" id="cal-grid">
-      <!-- JS가 채워줌 -->
-    </div>
-
-    <div class="cal-head reveal" style="margin-top:36px;">
-      <span id="cal-month-label-2">2026년 10월</span>
-    </div>
-    <div class="cal-grid reveal" id="cal-grid-2">
       <!-- JS가 채워줌 -->
     </div>
 
@@ -1615,7 +1608,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   })();
   // (a 태그의 href 기반 클릭은 미리보기에서 외부링크로 오인식될 수 있어 button 방식으로 전환함)
 
-  // ===== 일정 캘린더: 9월 잔여분 + 10월 =====
+  // ===== 일정 캘린더: 10월 =====
   // 날짜/시간이 바뀌면 아래 MONTHS 배열의 activeDays / bookableDays / closedDays / times / specials만 수정하면 돼요.
   // - activeDays: 캘린더에 "일정으로" 표시할 모든 날짜
   // - bookableDays: 그중 지금 신청서에서 실제로 고를 수 있는 날짜 (activeDays의 부분집합)
@@ -1624,19 +1617,10 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   // - specials: { day: { "시간": "특집 이름" } } — 해당 날짜·시간에 ★ 특집 표시
   const MONTHS = [
     {
-      year: 2026, month: 9, label: "2026년 9월",
-      gridId: "cal-grid", labelId: "cal-month-label",
-      activeDays: [5, 6, 12, 13, 19, 20, 26, 27],
-      bookableDays: [26, 27],
-      closedDays: [5, 6, 12, 13, 19, 20],
-      times: ["14:00", "17:00"],
-      specials: { 27: { "14:00": "비흡연자 특집" } }
-    },
-    {
       year: 2026, month: 10, label: "2026년 10월",
-      gridId: "cal-grid-2", labelId: "cal-month-label-2",
+      gridId: "cal-grid", labelId: "cal-month-label",
       activeDays: [3, 4, 10, 11, 17, 18, 24, 25, 31],
-      bookableDays: [3, 4],
+      bookableDays: [3, 4, 10, 11],
       closedDays: [],
       times: ["14:00", "17:00"]
     }
