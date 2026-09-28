@@ -360,6 +360,31 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     margin-bottom:32px;
   }
 
+  /* ---------- 주간 연령대 라인업 (lineup/update_lineup.py 가 매주 갱신) ---------- */
+  .lineup{margin:-8px 0 28px;}
+  .lineup-head{
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.5px;
+    color:var(--gold);
+    margin-bottom:10px;
+  }
+  .lineup-head .lineup-dates{color:var(--ivory); margin-left:6px;}
+  .lineup img{
+    width:100%;
+    height:auto;
+    aspect-ratio:1080/1350;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    background:#121012;
+  }
+  .lineup-foot{
+    font-size:12px;
+    color:var(--taupe);
+    margin-top:10px;
+    line-height:1.6;
+  }
+
   footer{
     padding:32px 0 48px;
     text-align:center;
@@ -1394,6 +1419,13 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     <h2 class="reveal">망설이는 사이에도,<br>누군가는 벌써 신청하고 있어요</h2>
     <p class="reveal">이번 라인업, 놓치지 마세요.</p>
 
+    <!-- 주간 연령대 라인업: lineup/update_lineup.py 가 이미지 버전·날짜·노출 종료일을 갱신 -->
+    <div class="lineup" id="lineup" data-lineup-until="2026-10-04">
+      <div class="lineup-head">이번 주 연령대 라인업<span class="lineup-dates">10/3(토) · 10/4(일)</span></div>
+      <img src="lineup/lineup.jpg?v=20261003" alt="위밋 10/3(토) · 10/4(일) 연령대 라인업" width="1080" height="1350">
+      <div class="lineup-foot">맞는 시간대가 있다면 아래에서 바로 체크해주세요 :)</div>
+    </div>
+
     <form class="apply-form reveal" id="apply-form">
       <div class="field">
         <label for="af-name">이름</label>
@@ -1818,6 +1850,15 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     window.addEventListener('mouseup', dragEnd);
 
     requestAnimationFrame(step);
+  })();
+
+  // 주간 라인업: 일요일(한국시간)이 지나면 자동으로 숨김 — 지난 라인업이 걸려 있지 않게
+  (function(){
+    const el = document.getElementById('lineup');
+    if(!el) return;
+    const until = el.getAttribute('data-lineup-until');
+    const todayKST = new Date(Date.now() + 9*3600*1000).toISOString().slice(0,10);
+    if(!until || todayKST > until) el.style.display = 'none';
   })();
 </script>
 

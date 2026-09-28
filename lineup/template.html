@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face { font-family: 'Noto Sans KR'; src: local('Noto Sans CJK KR'); font-weight: 400; }
+  @font-face { font-family: 'Noto Sans KR Medium'; src: local('Noto Sans CJK KR Medium'); font-weight: 500; }
+  @font-face { font-family: 'Noto Sans KR Bold'; src: local('Noto Sans CJK KR Bold'); font-weight: 700; }
+  @font-face { font-family: 'Noto Sans KR Black'; src: local('Noto Sans CJK KR Black'); font-weight: 900; }
+  @font-face { font-family: 'Noto Serif KR Black'; src: local('Noto Serif CJK KR Black'); font-weight: 900; }
+  @font-face { font-family: 'Noto Serif KR Bold'; src: local('Noto Serif CJK KR Bold'); font-weight: 700; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1080px; height: 1350px; background: #121012; position: relative; overflow: hidden; font-family: 'Noto Sans KR', sans-serif; }
+  .bg-glow { position: absolute; inset: 0; background: radial-gradient(circle at 50% -10%, rgba(199,30,52,0.35) 0%, rgba(18,16,18,0) 45%), radial-gradient(circle at 100% 110%, rgba(199,30,52,0.18) 0%, rgba(18,16,18,0) 50%); }
+  .frame { position: absolute; inset: 36px; border: 1px solid rgba(245,240,230,0.25); }
+  .content { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding: 60px 76px 44px; }
+  .eyebrow { font-family: 'Noto Sans KR Medium'; font-size: 22px; letter-spacing: 6px; color: #C71E34; }
+  .brand { font-family: 'Noto Serif KR Black'; font-size: 76px; color: #F5F0E6; letter-spacing: 4px; margin-top: 10px; }
+  .title { font-family: 'Noto Sans KR Bold'; font-size: 36px; color: #E8C878; margin-top: 18px; }
+  .subtitle { font-family: 'Noto Sans KR Bold'; font-size: 34px; color: #F5F0E6; margin-top: 12px; letter-spacing: 1px; }
+  .live-row { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+  .live-note { font-family: 'Noto Sans KR Medium'; font-size: 22px; color: rgba(245,240,230,0.75); }
+  .live-badge { display: inline-flex; align-items: center; gap: 8px; background: #C71E34; color: #F5F0E6; font-family: 'Noto Sans KR Bold'; font-size: 20px; letter-spacing: 2px; padding: 8px 20px; border-radius: 20px; }
+  .live-badge .dot { width: 9px; height: 9px; border-radius: 50%; background: #F5F0E6; }
+  .age-note { margin-top: 12px; font-family: 'Noto Sans KR Medium'; font-size: 24px; color: #F5F0E6; }
+  .age-note b { font-family: 'Noto Sans KR Bold'; color: #F5F0E6; border-bottom: 2px solid #C71E34; padding-bottom: 1px; }
+  .divider { width: 110px; height: 3px; background: #C71E34; margin-top: 18px; margin-bottom: 20px; }
+  .cards { width: 100%; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+  .card { position: relative; background: #F5F0E6; border-radius: 14px; padding: 18px 40px; display: flex; align-items: center; gap: 34px; box-shadow: 0 10px 24px rgba(0,0,0,0.28); }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: #C71E34; border-radius: 14px 0 0 14px; }
+  .card.special { background: #C71E34; }
+  .card.special::before { background: #121012; }
+  .day-block { display: flex; flex-direction: column; align-items: flex-start; min-width: 210px; padding-left: 14px; }
+  .day-label { font-family: 'Noto Sans KR Bold'; font-size: 30px; color: #121012; letter-spacing: 0.5px; }
+  .card.special .day-label { color: #F5F0E6; }
+  .time-label { font-family: 'Noto Serif KR Black'; font-size: 46px; color: #C71E34; margin-top: 2px; }
+  .card.special .time-label { color: #121012; }
+  .badge { margin-top: 10px; display: inline-block; font-family: 'Noto Sans KR Bold'; font-size: 18px; color: #F5F0E6; background: #121012; padding: 6px 14px; border-radius: 20px; letter-spacing: 1px; }
+  .card.special .badge { background: #F5F0E6; color: #C71E34; }
+  .divider-v { width: 1px; align-self: stretch; background: rgba(18,16,18,0.15); }
+  .card.special .divider-v { background: rgba(245,240,230,0.3); }
+  .genders { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .gender-row { display: flex; align-items: center; gap: 16px; }
+  .gender-tag { font-family: 'Noto Sans KR Bold'; font-size: 26px; color: #F5F0E6; width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .gender-tag.male { background: #121012; }
+  .gender-tag.female { background: #C71E34; }
+  .card.special .gender-tag.male { background: #121012; }
+  .card.special .gender-tag.female { background: #121012; color: #C71E34; }
+  .gender-text { font-family: 'Noto Sans KR Medium'; font-size: 40px; color: #121012; }
+  .card.special .gender-text { color: #F5F0E6; }
+  .gender-text b { font-family: 'Noto Sans KR Bold'; }
+  .footer-note { margin-top: 22px; font-family: 'Noto Sans KR Medium'; font-size: 25px; color: #E8C878; letter-spacing: 0.3px; text-align: center; line-height: 1.6; }
+  .footer-note b { font-family: 'Noto Sans KR Bold'; font-size: 29px; }
+</style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <div class="frame"></div>
+  <div class="content">
+    <div class="eyebrow">WEEKLY LINE-UP</div>
+    <div class="brand">대구·경북 위밋</div>
+    <div class="title">이번주 로테이션 소개팅 라인업</div>
+    <div class="subtitle">{{SAT_DATE}} (토)  ·  {{SUN_DATE}} (일)</div>
+    <div class="live-row"><div class="live-badge"><span class="dot"></span>{{STATUS_TEXT}}</div><span class="live-note">{{LIVE_NOTE}}</span></div>
+    <div class="age-note">{{AGE_NOTE}}</div>
+    <div class="divider"></div>
+
+    <div class="cards">
+      {{CARDS}}
+    </div>
+
+    <div class="footer-note"><b>{{FOOTER_LINE_1}}</b><br>{{FOOTER_LINE_2}}</div>
+  </div>
+</body>
+</html>
