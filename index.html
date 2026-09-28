@@ -551,6 +551,65 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     line-height:1.45;
     margin:48px 0 6px;
   }
+  .vs-table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    margin-top:14px;
+    table-layout:fixed;
+  }
+  .vs-table th, .vs-table td{
+    text-align:center;
+    padding:13px 2px;
+    border-bottom:1px solid var(--line);
+    font-size:12px;
+  }
+  .vs-table thead th{
+    font-size:12px;
+    font-weight:700;
+    color:var(--taupe);
+    border-bottom:1px solid var(--ivory);
+    padding-bottom:10px;
+  }
+  .vs-table thead th:first-child{width:36%;}
+  .vs-table tbody th{
+    text-align:left;
+    font-size:13px;
+    font-weight:700;
+    color:var(--ivory);
+    line-height:1.4;
+    padding-right:6px;
+  }
+  .vs-table .us{background:rgba(192,57,43,0.10);}
+  .vs-table thead th.us{
+    color:#fff;
+    background:var(--gold);
+    font-family:var(--serif);
+    font-size:14px;
+    border-radius:10px 10px 0 0;
+  }
+  .vs-table tbody tr:last-child .us{border-radius:0 0 10px 10px;}
+  .mk{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    font-size:13px;
+    font-weight:700;
+    line-height:1;
+  }
+  .mk.y{background:var(--gold); color:#fff;}
+  .mk.m{border:1.5px solid var(--taupe); color:var(--taupe); font-size:11px;}
+  .mk.n{color:rgba(34,30,26,0.28); font-size:15px;}
+  .vs-legend{
+    margin-top:12px;
+    font-size:11.5px;
+    color:var(--taupe);
+    text-align:center;
+  }
+  .vs-legend .mk{width:18px; height:18px; font-size:10px; vertical-align:middle; margin-right:3px;}
   .compare-scroll-hint{
     font-size:11.5px;
     color:var(--taupe);
@@ -1289,48 +1348,38 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     </div>
     <p class="compare-scroll-hint">← 옆으로 넘기면 더 볼 수 있어요 →</p>
 
-    <h3 class="compare-sub reveal">다른 로테이션 소개팅, 솔로파티와는 뭐가 다를까요?</h3>
-    <div class="compare-table-wrap reveal">
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th class="row-label"></th>
-            <th>오는 사람들</th>
-            <th>참가자 확인</th>
-            <th>인원·연령대</th>
-            <th>대화 방식</th>
-            <th>아는 사람</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="row-label">타 로테이션 업체</td>
-            <td>신청 순서대로<br>누구나 참석</td>
-            <td>간단한 신청서 정도</td>
-            <td>인원이 많고<br>연령대 폭이 넓음</td>
-            <td>짧게 여러 명,<br>제대로 알기 어려움</td>
-            <td>마주칠 수 있음</td>
-          </tr>
-          <tr>
-            <td class="row-label">솔로파티</td>
-            <td>가볍게 놀러 오는<br>분위기가 많음</td>
-            <td>거의 없음</td>
-            <td>수십 명이<br>한자리에</td>
-            <td>술자리·단체 대화 위주</td>
-            <td>마주칠 수 있음</td>
-          </tr>
-          <tr class="best-row">
-            <td class="row-label">위밋</td>
-            <td>진짜 연애하고 싶은<br>분들만 선별</td>
-            <td>신분증·재직 서류와<br>설문지로 꼼꼼히 확인</td>
-            <td>6:6~8:8 소규모,<br>선호 연령대 맞춤</td>
-            <td>전원과 1:1로<br>10~15분씩 대화</td>
-            <td>지인·이전 만남<br>미리 차단</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="compare-scroll-hint">← 옆으로 넘기면 더 볼 수 있어요 →</p>
+    <h3 class="compare-sub reveal">다른 업체, 파티, 혼술바와는<br>뭐가 다를까요?</h3>
+    <table class="vs-table reveal">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="us">위밋</th><th>타업체</th><th>파티</th><th>혼술바</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">진짜 연애하려는 사람만</th>
+          <td class="us"><span class="mk y">✓</span></td><td><span class="mk m">△</span></td><td><span class="mk n">✕</span></td><td><span class="mk n">✕</span></td>
+        </tr>
+        <tr>
+          <th scope="row">서류로 신원 확인</th>
+          <td class="us"><span class="mk y">✓</span></td><td><span class="mk m">△</span></td><td><span class="mk n">✕</span></td><td><span class="mk n">✕</span></td>
+        </tr>
+        <tr>
+          <th scope="row">소규모·연령대 맞춤</th>
+          <td class="us"><span class="mk y">✓</span></td><td><span class="mk m">△</span></td><td><span class="mk n">✕</span></td><td><span class="mk n">✕</span></td>
+        </tr>
+        <tr>
+          <th scope="row">모두와 1:1로 대화</th>
+          <td class="us"><span class="mk y">✓</span></td><td><span class="mk m">△</span></td><td><span class="mk n">✕</span></td><td><span class="mk m">△</span></td>
+        </tr>
+        <tr>
+          <th scope="row">지인 마주칠 걱정 없음</th>
+          <td class="us"><span class="mk y">✓</span></td><td><span class="mk m">△</span></td><td><span class="mk n">✕</span></td><td><span class="mk n">✕</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="vs-legend"><span class="mk y">✓</span> 확실히 &nbsp; <span class="mk m">△</span> 곳마다 다름 &nbsp; <span class="mk n">✕</span> 기대하기 어려움</p>
   </div>
 </section>
 
