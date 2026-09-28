@@ -361,7 +361,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   }
 
   /* ---------- 주간 연령대 라인업 (lineup/update_lineup.py 가 매주 갱신) ---------- */
-  .lineup{margin:-8px 0 28px;}
+  .lineup{margin:0 0 28px; text-align:center;}
   .lineup-head{
     font-size:13px;
     font-weight:700;
@@ -1090,11 +1090,11 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 <body>
 
 <nav class="top-nav">
+  <button onclick="document.getElementById('calendar-section').scrollIntoView({behavior:'smooth'})">일정</button>
   <button onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">위밋</button>
-  <button onclick="document.getElementById('howto').scrollIntoView({behavior:'smooth'})">이용방법</button>
   <button onclick="document.getElementById('conditions').scrollIntoView({behavior:'smooth'})">참가조건</button>
   <button onclick="document.getElementById('coupons').scrollIntoView({behavior:'smooth'})">쿠폰</button>
-  <button onclick="document.getElementById('calendar-section').scrollIntoView({behavior:'smooth'})">일정</button>
+  <button onclick="document.getElementById('howto').scrollIntoView({behavior:'smooth'})">이용방법</button>
   <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">질문</button>
 </nav>
 
@@ -1176,7 +1176,33 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   </div>
 </section>
 
-<section class="alt" id="why">
+<section class="alt" id="calendar-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">이번 달 일정</span>
+      <h2>날짜 눌러서 바로 신청하기</h2>
+    </div>
+    <!-- 주간 연령대 라인업: lineup/update_lineup.py 가 이미지 버전·날짜·노출 종료일을 갱신 -->
+    <div class="lineup" id="lineup" data-lineup-until="2026-10-04">
+      <div class="lineup-head">이번 주 연령대 라인업<span class="lineup-dates">10/3(토) · 10/4(일)</span></div>
+      <img src="lineup/lineup.jpg?v=20261003" alt="위밋 10/3(토) · 10/4(일) 연령대 라인업" width="1080" height="1350">
+      <div class="lineup-foot">맞는 시간대가 있다면 아래 날짜를 눌러 바로 신청해주세요 :)</div>
+    </div>
+
+    <div class="cal-head reveal">
+      <span id="cal-month-label">2026년 10월</span>
+    </div>
+    <div class="cal-grid reveal" id="cal-grid">
+      <!-- JS가 채워줌 -->
+    </div>
+
+    <p class="cal-legend reveal">• 진하게 표시된 날짜는 지금 바로 신청 가능해요 (누르면 신청폼으로 이동) · 점선으로 흐리게 표시된 날짜는 추후 신청 예정이에요 · 취소선으로 표시된 날짜는 마감됐어요 · ★는 특집 이벤트예요</p>
+
+    <!-- 요일·시간대가 바뀌면 JS의 EVENT_TIMES / 요일 조건(dow===0||dow===6)만 수정하면 돼요 -->
+  </div>
+</section>
+
+<section id="why">
   <div class="wrap">
     <div class="section-head reveal">
       <h2>왜 위밋에 와야할까요?</h2>
@@ -1260,7 +1286,62 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   </div>
 </section>
 
-<section id="howto">
+<section class="alt" id="conditions">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">참가 조건</span>
+      <h2>이런 분들과 함께해요</h2>
+    </div>
+    <p class="cond-note reveal" style="margin-top:0; margin-bottom:24px;"><span style="color:var(--gold); font-weight:700;">다른 소개팅 업체처럼 신청해주셔도 다 참석하실순 없어요😢</span><br>정성껏 작성해주신 설문지를 토대로<br>외모, 분위기, 직업, 가치관은 물론이고 말투, 대화 스타일, 태도, 자기관리정도까지 살펴서 어울리는 분들로 매칭시켜드려요❤️</p>
+
+    <div class="cond-list reveal">
+      <div class="cond-row"><span class="k">거주지</span><span class="v">대구 · 경북</span></div>
+      <div class="cond-row"><span class="k">나이</span><span class="v">남 1986~2002년생 · 여 1986~2005년생</span></div>
+      <div class="cond-row"><span class="k">신장</span><span class="v">남성 173cm 이상 · 여성 제한없음</span></div>
+      <div style="font-size:11px; color:var(--taupe); text-align:right; margin-top:-8px; margin-bottom:2px;">※ 남성분은 키 조건이 약간 미달이더라도 다른 요소들을 종합적으로 고려해 참가가 가능할 수 있어요.</div>
+      <div class="cond-row"><span class="k">직업</span><span class="v">소득이 있는 직장인</span></div>
+      <div class="cond-row"><span class="k">혼인</span><span class="v">법적 미혼자</span></div>
+    </div>
+    <p class="cond-note reveal">신청해주신 분 전부가 아니라, 여러가지로 어울리는 자리가 될지 확인하고 선별을 거쳐서 참가가 확정돼요. 신청자분들이 많아 선정되지 않은 분께는 연락을 전부 따로 드리진 못하고 선정되신 분께만 연락드립니다😢</p>
+  </div>
+</section>
+
+<section id="coupons">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">쿠폰</span>
+      <h2>지금 쓸 수 있는 할인쿠폰</h2>
+    </div>
+
+    <div class="coupon-list reveal">
+      <div class="coupon-card">
+        <div class="amt">5,000원 할인</div>
+        <div class="name">재참여 할인쿠폰</div>
+        <div class="why">이 자리에서 인연을 못 찾으신 분들을,<br>끝까지 책임지고 싶어서 만들었어요🙏</div>
+      </div>
+      <div class="coupon-card">
+        <div class="amt">5,000원 할인</div>
+        <div class="name">얼리버드 할인쿠폰</div>
+        <div class="why">미리 마음을 정해주신 분들께,<br>감사한 마음을 담았어요💛</div>
+      </div>
+      <div class="coupon-card">
+        <div class="amt">5,000원 할인</div>
+        <div class="name">여성전용 친구할인 쿠폰</div>
+        <div class="why">혼자 나오기 망설여지는 분들이,<br>친구와 함께 편하게 오실 수 있도록 마련했어요😊</div>
+      </div>
+      <div class="coupon-card">
+        <div class="amt">50% 할인</div>
+        <div class="name">마음 적립 쿠폰</div>
+        <div class="why">꾸준히 믿고 찾아주신 마음에 대한<br>위밋의 작은 진심이에요💕</div>
+      </div>
+    </div>
+    <p class="coupon-note reveal" style="font-size:15px; font-weight:700; color:var(--ivory);">얼리버드·친구·재참여 할인쿠폰은 중복 적용돼요</p>
+    <p class="coupon-note reveal" style="margin-top:6px;">마음 적립 쿠폰은 중복적용이 어려우며, 쿠폰별 자세한 사용 조건은 카카오톡 채널 또는 인스타그램을 참고해주세요🫰</p>
+    <p class="coupon-note reveal" style="margin-top:10px;">각종 돌발 이벤트가 수시로 열리니, 인스타그램을 팔로우하거나 카카오톡 오픈채팅방에 들어와 계시면 놓치지 않고 챙기실 수 있어요.</p>
+  </div>
+</section>
+
+<section class="alt" id="howto">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">이용 방법</span>
@@ -1297,80 +1378,6 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="alt" id="conditions">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">참가 조건</span>
-      <h2>이런 분들과 함께해요</h2>
-    </div>
-    <p class="cond-note reveal" style="margin-top:0; margin-bottom:24px;"><span style="color:var(--gold); font-weight:700;">다른 소개팅 업체처럼 신청해주셔도 다 참석하실순 없어요😢</span><br>정성껏 작성해주신 설문지를 토대로<br>외모, 분위기, 직업, 가치관은 물론이고 말투, 대화 스타일, 태도, 자기관리정도까지 살펴서 어울리는 분들로 매칭시켜드려요❤️</p>
-
-    <div class="cond-list reveal">
-      <div class="cond-row"><span class="k">거주지</span><span class="v">대구 · 경북</span></div>
-      <div class="cond-row"><span class="k">나이</span><span class="v">남 1986~2002년생 · 여 1986~2005년생</span></div>
-      <div class="cond-row"><span class="k">신장</span><span class="v">남성 173cm 이상 · 여성 제한없음</span></div>
-      <div style="font-size:11px; color:var(--taupe); text-align:right; margin-top:-8px; margin-bottom:2px;">※ 남성분은 키 조건이 약간 미달이더라도 다른 요소들을 종합적으로 고려해 참가가 가능할 수 있어요.</div>
-      <div class="cond-row"><span class="k">직업</span><span class="v">소득이 있는 직장인</span></div>
-      <div class="cond-row"><span class="k">혼인</span><span class="v">법적 미혼자</span></div>
-    </div>
-    <p class="cond-note reveal">신청해주신 분 전부가 아니라, 여러가지로 어울리는 자리가 될지 확인하고 선별을 거쳐서 참가가 확정돼요. 신청자분들이 많아 선정되지 않은 분께는 연락을 전부 따로 드리진 못하고 선정되신 분께만 연락드립니다😢</p>
-  </div>
-</section>
-
-<section id="calendar-section">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">이번 달 일정</span>
-      <h2>날짜 눌러서 바로 신청하기</h2>
-    </div>
-    <div class="cal-head reveal">
-      <span id="cal-month-label">2026년 10월</span>
-    </div>
-    <div class="cal-grid reveal" id="cal-grid">
-      <!-- JS가 채워줌 -->
-    </div>
-
-    <p class="cal-legend reveal">• 진하게 표시된 날짜는 지금 바로 신청 가능해요 (누르면 신청폼으로 이동) · 점선으로 흐리게 표시된 날짜는 추후 신청 예정이에요 · 취소선으로 표시된 날짜는 마감됐어요 · ★는 특집 이벤트예요</p>
-
-    <!-- 요일·시간대가 바뀌면 JS의 EVENT_TIMES / 요일 조건(dow===0||dow===6)만 수정하면 돼요 -->
-  </div>
-</section>
-
-<section class="alt" id="coupons">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">쿠폰</span>
-      <h2>지금 쓸 수 있는 할인쿠폰</h2>
-    </div>
-
-    <div class="coupon-list reveal">
-      <div class="coupon-card">
-        <div class="amt">5,000원 할인</div>
-        <div class="name">재참여 할인쿠폰</div>
-        <div class="why">이 자리에서 인연을 못 찾으신 분들을,<br>끝까지 책임지고 싶어서 만들었어요🙏</div>
-      </div>
-      <div class="coupon-card">
-        <div class="amt">5,000원 할인</div>
-        <div class="name">얼리버드 할인쿠폰</div>
-        <div class="why">미리 마음을 정해주신 분들께,<br>감사한 마음을 담았어요💛</div>
-      </div>
-      <div class="coupon-card">
-        <div class="amt">5,000원 할인</div>
-        <div class="name">여성전용 친구할인 쿠폰</div>
-        <div class="why">혼자 나오기 망설여지는 분들이,<br>친구와 함께 편하게 오실 수 있도록 마련했어요😊</div>
-      </div>
-      <div class="coupon-card">
-        <div class="amt">50% 할인</div>
-        <div class="name">마음 적립 쿠폰</div>
-        <div class="why">꾸준히 믿고 찾아주신 마음에 대한<br>위밋의 작은 진심이에요💕</div>
-      </div>
-    </div>
-    <p class="coupon-note reveal" style="font-size:15px; font-weight:700; color:var(--ivory);">얼리버드·친구·재참여 할인쿠폰은 중복 적용돼요</p>
-    <p class="coupon-note reveal" style="margin-top:6px;">마음 적립 쿠폰은 중복적용이 어려우며, 쿠폰별 자세한 사용 조건은 카카오톡 채널 또는 인스타그램을 참고해주세요🫰</p>
-    <p class="coupon-note reveal" style="margin-top:10px;">각종 돌발 이벤트가 수시로 열리니, 인스타그램을 팔로우하거나 카카오톡 오픈채팅방에 들어와 계시면 놓치지 않고 챙기실 수 있어요.</p>
   </div>
 </section>
 
@@ -1419,12 +1426,6 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     <h2 class="reveal">망설이는 사이에도,<br>누군가는 벌써 신청하고 있어요</h2>
     <p class="reveal">이번 라인업, 놓치지 마세요.</p>
 
-    <!-- 주간 연령대 라인업: lineup/update_lineup.py 가 이미지 버전·날짜·노출 종료일을 갱신 -->
-    <div class="lineup" id="lineup" data-lineup-until="2026-10-04">
-      <div class="lineup-head">이번 주 연령대 라인업<span class="lineup-dates">10/3(토) · 10/4(일)</span></div>
-      <img src="lineup/lineup.jpg?v=20261003" alt="위밋 10/3(토) · 10/4(일) 연령대 라인업" width="1080" height="1350">
-      <div class="lineup-foot">맞는 시간대가 있다면 아래에서 바로 체크해주세요 :)</div>
-    </div>
 
     <form class="apply-form reveal" id="apply-form">
       <div class="field">
