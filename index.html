@@ -500,7 +500,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   }
   .compare-table{
     border-collapse:collapse;
-    min-width:520px;
+    min-width:740px;
     width:100%;
   }
   .compare-table th, .compare-table td{
@@ -527,10 +527,12 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     white-space:nowrap;
     position:sticky;
     left:0;
-    background:var(--bg-panel);
+    background:var(--bg-deep);
+    z-index:1;
   }
   .compare-table td:not(.row-label){
     width:150px;
+    min-width:128px;
     color:var(--taupe);
   }
   .compare-table tr.best-row td{
@@ -540,7 +542,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   }
   .compare-table tr.best-row .row-label{
     color:var(--gold);
-    background:rgba(192,57,43,0.18);
+    background:linear-gradient(rgba(192,57,43,0.18),rgba(192,57,43,0.18)), var(--bg-deep);
   }
   .compare-scroll-hint{
     font-size:11.5px;
@@ -1240,40 +1242,37 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         <thead>
           <tr>
             <th class="row-label"></th>
-            <th>상대 정보</th>
-            <th>비용 부담</th>
-            <th>실제 만남</th>
-            <th>시간 효율</th>
+            <th>오는 사람들</th>
+            <th>참가자 확인</th>
+            <th>인원·연령대</th>
+            <th>대화 방식</th>
+            <th>아는 사람</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="row-label">데이팅 앱</td>
-            <td>조작, 알바 의혹이 많음</td>
-            <td>무료~소액이지만<br>결제 유도 잦음</td>
-            <td>만남도 없이 대화만 하다<br>흐지부지 끝나기 쉬움</td>
-            <td>대화만 몇 주</td>
+            <td class="row-label">일반 로테이션</td>
+            <td>신청 순서대로<br>누구나 참석</td>
+            <td>간단한 신청서 정도</td>
+            <td>인원이 많고<br>연령대 폭이 넓음</td>
+            <td>짧게 여러 명,<br>제대로 알기 어려움</td>
+            <td>마주칠 수 있음</td>
           </tr>
           <tr>
-            <td class="row-label">결혼정보회사</td>
-            <td>정보는 주지만<br>받기까지 오래 걸림</td>
-            <td>수백만 원대 가입비,<br>긴 계약</td>
-            <td>매니저가 주선,<br>일정 맞추기 오래 걸림</td>
-            <td>주선까지 대기 기간</td>
-          </tr>
-          <tr>
-            <td class="row-label">지인 소개</td>
-            <td>오히려 이미지가<br>과대포장되는 경우 많음</td>
-            <td>무료지만<br>얽힌 관계가 부담일 수 있음</td>
-            <td>기회 자체가<br>자주 오지 않음</td>
-            <td>기회 자체가 드묾</td>
+            <td class="row-label">솔로파티</td>
+            <td>가볍게 놀러 오는<br>분위기가 많음</td>
+            <td>거의 없음</td>
+            <td>수십 명이<br>한자리에</td>
+            <td>술자리·단체 대화 위주</td>
+            <td>마주칠 수 있음</td>
           </tr>
           <tr class="best-row">
             <td class="row-label">위밋</td>
-            <td>서류·설문지로 꼼꼼히 확인 후<br>잘 맞는 이성만 선별</td>
-            <td>합리적인 참가비로<br>여러 명을 한 번에 실제 만남</td>
-            <td>매주 정해진 시간마다<br>새로운 만남</td>
-            <td>10분~15분마다<br>새로운 이성과 대화</td>
+            <td>진짜 연애하고 싶은<br>분들만 선별</td>
+            <td>신분증·재직 서류와<br>설문지로 꼼꼼히 확인</td>
+            <td>6:6~8:8 소규모,<br>선호 연령대 맞춤</td>
+            <td>전원과 1:1로<br>10~15분씩 대화</td>
+            <td>지인·이전 만남<br>미리 차단</td>
           </tr>
         </tbody>
       </table>
