@@ -684,7 +684,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     border:1.5px solid var(--ivory);
     border-radius:14px;
     padding:4px 18px 12px;
-    margin-bottom:32px;
+    margin-bottom:26px;
   }
   .price-row{
     display:flex;
@@ -729,33 +729,37 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     font-weight:700;
     margin-bottom:14px;
   }
-  .coupon-list{display:flex; flex-direction:column; gap:14px;}
+  .coupon-list{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
   .coupon-card{
     background:var(--bg-panel-alt);
     border:1px solid var(--gold);
-    border-radius:var(--radius);
-    padding:20px 22px;
+    border-radius:12px;
+    padding:14px 12px;
     position:relative;
+    display:flex;
+    flex-direction:column;
   }
   .coupon-card .amt{
     font-family:var(--serif);
-    font-size:22px;
+    font-size:18px;
     font-weight:700;
     color:var(--gold);
     margin-bottom:4px;
+    line-height:1.2;
   }
   .coupon-card .name{
-    font-size:14.5px;
+    font-size:13px;
     font-weight:700;
     color:var(--ivory);
-    margin-bottom:8px;
+    margin-bottom:6px;
+    line-height:1.35;
+    word-break:keep-all;
   }
   .coupon-card .why{
-    font-size:13.5px;
-    color:var(--ivory);
-    font-style:italic;
-    line-height:1.6;
-    margin-bottom:8px;
+    font-size:11.5px;
+    color:var(--taupe);
+    line-height:1.5;
+    word-break:keep-all;
   }
   .coupon-card .desc{
     font-size:13px;
@@ -1513,25 +1517,25 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       <div class="coupon-card">
         <div class="amt">5,000원 할인</div>
         <div class="name">재참여 할인쿠폰</div>
-        <div class="why">이 자리에서 인연을 못 찾으신 분들을,<br>끝까지 책임지고 싶어서 만들었어요🙏</div>
+        <div class="why">이 자리에서 인연을 못 찾으신 분들을, 끝까지 책임지고 싶어서 만들었어요🙏</div>
       </div>
       <div class="coupon-card">
         <div class="amt">5,000원 할인</div>
         <div class="name">얼리버드 할인쿠폰</div>
-        <div class="why">미리 마음을 정해주신 분들께,<br>감사한 마음을 담았어요💛</div>
+        <div class="why">미리 마음을 정해주신 분들께, 감사한 마음을 담았어요💛</div>
       </div>
       <div class="coupon-card">
         <div class="amt">5,000원 할인</div>
         <div class="name">여성전용 친구할인 쿠폰</div>
-        <div class="why">혼자 나오기 망설여지는 분들이,<br>친구와 함께 편하게 오실 수 있도록 마련했어요😊</div>
+        <div class="why">혼자 나오기 망설여지는 분들이, 친구와 함께 편하게 오실 수 있도록 마련했어요😊</div>
       </div>
       <div class="coupon-card">
         <div class="amt">50% 할인</div>
         <div class="name">마음 적립 쿠폰</div>
-        <div class="why">꾸준히 믿고 찾아주신 마음에 대한<br>위밋의 작은 진심이에요💕</div>
+        <div class="why">꾸준히 믿고 찾아주신 마음에 대한 위밋의 작은 진심이에요💕</div>
       </div>
     </div>
-    <p class="coupon-note reveal" style="font-size:15px; font-weight:700; color:var(--ivory);">얼리버드·친구·재참여 할인쿠폰은 중복 적용돼요</p>
+    <p class="coupon-note reveal" style="font-size:13.5px; font-weight:700; color:var(--ivory);">얼리버드·친구·재참여 할인쿠폰은 중복 적용돼요</p>
     <p class="coupon-note reveal" style="margin-top:6px;">마음 적립 쿠폰은 중복적용이 어려우며, 쿠폰별 자세한 사용 조건은 카카오톡 채널 또는 인스타그램을 참고해주세요🫰</p>
     <p class="coupon-note reveal" style="margin-top:10px;">각종 돌발 이벤트가 수시로 열리니, 인스타그램을 팔로우하거나 카카오톡 오픈채팅방에 들어와 계시면 놓치지 않고 챙기실 수 있어요.</p>
   </div>
