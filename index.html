@@ -495,55 +495,48 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 
   /* ---------- Compare positioning ---------- */
   .compare-table-wrap{
-    overflow-x:auto;
     margin-top:8px;
-    -webkit-overflow-scrolling:touch;
   }
   .compare-table{
     border-collapse:collapse;
-    min-width:740px;
     width:100%;
+    table-layout:fixed;
   }
   .compare-table th, .compare-table td{
-    padding:12px 10px;
+    padding:11px 4px;
     text-align:left;
     vertical-align:top;
-    font-size:12.5px;
-    line-height:1.5;
+    font-size:11.5px;
+    line-height:1.45;
     border-bottom:1px solid var(--line);
+    word-break:keep-all;
   }
   .compare-table thead th{
-    font-size:11.5px;
-    font-weight:700;
-    color:var(--taupe);
-    white-space:nowrap;
-    border-bottom:1px solid var(--gold);
+    font-size:12px;
+    font-weight:800;
+    color:var(--ivory);
+    border-bottom:1px solid var(--ivory);
   }
   .compare-table .row-label{
-    width:100px;
-    font-family:var(--serif);
-    font-size:13.5px;
+    width:24%;
+    font-size:12.5px;
     font-weight:700;
     color:var(--ivory);
-    white-space:nowrap;
-    position:sticky;
-    left:0;
-    background:var(--bg-deep);
-    z-index:1;
+    padding-left:2px;
   }
   .compare-table td:not(.row-label){
-    width:150px;
-    min-width:128px;
     color:var(--taupe);
   }
   .compare-table tr.best-row td{
     background:rgba(192,57,43,0.12);
-    color:var(--ivory);
-    font-weight:600;
+    color:var(--gold);
+    font-weight:700;
   }
   .compare-table tr.best-row .row-label{
     color:var(--gold);
-    background:linear-gradient(rgba(192,57,43,0.18),rgba(192,57,43,0.18)), var(--bg-deep);
+    font-family:var(--serif);
+    font-size:14px;
+    padding-left:8px;
   }
   .compare-sub{
     font-family:var(--serif);
@@ -1392,89 +1385,57 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
           <tr>
             <th class="row-label"></th>
             <th>상대 정보</th>
-            <th>비용 부담</th>
-            <th>실제 만남</th>
-            <th>시간 효율</th>
+            <th>만남 방식</th>
+            <th>걸리는 시간</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="row-label">데이팅 앱</td>
-            <td>조작, 알바 의혹이 많음</td>
-            <td>무료~소액이지만<br>결제 유도 잦음</td>
-            <td>만남도 없이 대화만 하다<br>흐지부지 끝나기 쉬움</td>
-            <td>대화만 몇 주</td>
+            <td>조작·알바<br>의혹이 많음</td>
+            <td>대화만 하다<br>끝나기 쉬움</td>
+            <td>대화만<br>몇 주</td>
           </tr>
           <tr>
-            <td class="row-label">결혼정보회사</td>
-            <td>정보는 주지만<br>받기까지 오래 걸림</td>
-            <td>수백만 원대 가입비,<br>긴 계약</td>
-            <td>매니저가 주선,<br>일정 맞추기 오래 걸림</td>
-            <td>주선까지 대기 기간</td>
+            <td class="row-label">결정사</td>
+            <td>서류는 확인,<br>받기까지 오래</td>
+            <td>매니저 주선<br>1명씩</td>
+            <td>주선까지<br>대기</td>
           </tr>
           <tr>
             <td class="row-label">지인 소개</td>
-            <td>오히려 이미지가<br>과대포장되는 경우 많음</td>
-            <td>무료지만<br>얽힌 관계가 부담일 수 있음</td>
-            <td>기회 자체가<br>자주 오지 않음</td>
-            <td>기회 자체가 드묾</td>
+            <td>과대포장<br>되기도 함</td>
+            <td>기회 자체가<br>드묾</td>
+            <td>연락 올 때까지<br>기약 없음</td>
+          </tr>
+          <tr>
+            <td class="row-label">타업체</td>
+            <td>보통<br>선착순</td>
+            <td>많게는<br>수십 명</td>
+            <td>2~4시간</td>
+          </tr>
+          <tr>
+            <td class="row-label">솔로파티</td>
+            <td>확인<br>거의 없음</td>
+            <td>술자리·<br>단체 대화</td>
+            <td>2~3시간</td>
+          </tr>
+          <tr>
+            <td class="row-label">혼술바</td>
+            <td>알 수<br>없음</td>
+            <td>그날 손님과<br>우연히 합석</td>
+            <td>끝이 없음</td>
           </tr>
           <tr class="best-row">
             <td class="row-label">위밋</td>
-            <td>서류·설문지로 꼼꼼히 확인 후<br>잘 맞는 이성만 선별</td>
-            <td>합리적인 참가비로<br>여러 명을 한 번에 실제 만남</td>
-            <td>매주 정해진 시간마다<br>새로운 만남</td>
-            <td>10분~15분마다<br>새로운 이성과 대화</td>
+            <td>서류 확인 후<br>좋은 분들만 선별</td>
+            <td>6~8명과<br>모두 1:1 대화</td>
+            <td>1시간<br>40~50분</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="compare-scroll-hint">← 옆으로 넘기면 더 볼 수 있어요 →</p>
-
-    <h3 class="compare-sub reveal">비슷해 보여도,<br>위밋은 이렇게 달라요</h3>
-    <table class="vs-table reveal">
-      <thead>
-        <tr>
-          <th></th>
-          <th class="us">위밋</th><th>타업체</th><th>솔로파티</th><th>혼술바</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">알바·바람잡이<br>없음</th>
-          <td class="us"><span class="mk y">✓</span></td><td><span class="mk m">△</span></td><td><span class="mk m">△</span></td><td><span class="dv">—</span></td>
-        </tr>
-        <tr>
-          <th scope="row">참가자 선정</th>
-          <td class="us"><span class="dv us-dv">좋은 분들만<br>선별</span></td><td><span class="dv">보통<br>선착순</span></td><td><span class="dv">보통<br>선착순</span></td><td><span class="dv">없음</span></td>
-        </tr>
-        <tr>
-          <th scope="row">신원 확인</th>
-          <td class="us"><span class="dv us-dv">신분증·<br>재직서류</span></td><td><span class="mk m">△</span></td><td><span class="mk n">✕</span></td><td><span class="mk n">✕</span></td>
-        </tr>
-        <tr>
-          <th scope="row">지인·이전 만남 차단</th>
-          <td class="us"><span class="dv us-dv">자동<br>차단</span></td><td><span class="mk m">△</span></td><td><span class="mk n">✕</span></td><td><span class="mk n">✕</span></td>
-        </tr>
-        <tr>
-          <th scope="row">한 자리 인원</th>
-          <td class="us"><span class="dv us-dv">딱 적당한<br>6:6~8:8</span></td><td><span class="dv">12~40명</span></td><td><span class="dv">20~80명</span></td><td><span class="dv">그날<br>손님</span></td>
-        </tr>
-        <tr>
-          <th scope="row">남녀 성비</th>
-          <td class="us"><span class="dv us-dv">1:1로<br>맞춤</span></td><td><span class="mk m">△</span></td><td><span class="mk m">△</span></td><td><span class="mk n">✕</span></td>
-        </tr>
-        <tr>
-          <th scope="row">자리마다 분리된<br>소개팅 전용 공간</th>
-          <td class="us"><span class="mk y">✓</span></td><td><span class="mk m">△</span></td><td><span class="mk n">✕</span></td><td><span class="mk n">✕</span></td>
-        </tr>
-        <tr>
-          <th scope="row">소요 시간</th>
-          <td class="us"><span class="dv us-dv">1시간<br>40~50분</span></td><td><span class="dv">2~4시간</span></td><td><span class="dv">2~3시간</span></td><td><span class="dv">무한대 ∞</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="vs-note">※ 공개된 안내·후기 기준</p>
+    <p class="vs-note">※ 공개된 안내·후기 기준, 곳마다 다를 수 있어요</p>
   </div>
 </section>
 
