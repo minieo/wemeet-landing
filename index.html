@@ -679,6 +679,56 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   }
 
   /* ---------- Coupons ---------- */
+  .price-box{
+    background:var(--bg-panel-alt);
+    border:1.5px solid var(--ivory);
+    border-radius:14px;
+    padding:8px 22px 18px;
+    margin-bottom:36px;
+  }
+  .price-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .price-row .who{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:16px;
+    font-weight:700;
+    color:var(--ivory);
+  }
+  .price-row .g{
+    width:30px; height:30px; border-radius:50%;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:14px; font-weight:700; color:#fff;
+  }
+  .price-row .g.m{background:var(--ivory);}
+  .price-row .g.f{background:var(--gold);}
+  .price-row .won{
+    font-family:var(--serif);
+    font-size:30px;
+    font-weight:700;
+    color:var(--ivory);
+    letter-spacing:-0.5px;
+  }
+  .price-row .won small{font-size:16px; margin-left:2px;}
+  .price-inc{
+    margin-top:14px;
+    font-size:13px;
+    color:var(--taupe);
+    text-align:center;
+    line-height:1.6;
+  }
+  .coupon-sub{
+    font-family:var(--serif);
+    font-size:19px;
+    font-weight:700;
+    margin-bottom:14px;
+  }
   .coupon-list{display:flex; flex-direction:column; gap:14px;}
   .coupon-card{
     background:var(--bg-panel-alt);
@@ -1185,7 +1235,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   <button onclick="document.getElementById('calendar-section').scrollIntoView({behavior:'smooth'})">일정</button>
   <button onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">위밋</button>
   <button onclick="document.getElementById('conditions').scrollIntoView({behavior:'smooth'})">참가조건</button>
-  <button onclick="document.getElementById('coupons').scrollIntoView({behavior:'smooth'})">쿠폰</button>
+  <button onclick="document.getElementById('coupons').scrollIntoView({behavior:'smooth'})">참가비</button>
   <button onclick="document.getElementById('howto').scrollIntoView({behavior:'smooth'})">이용방법</button>
   <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">질문</button>
 </nav>
@@ -1442,10 +1492,23 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 <section id="coupons">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">쿠폰</span>
-      <h2>지금 쓸 수 있는 할인쿠폰</h2>
+      <span class="eyebrow">참가비 &amp; 할인</span>
+      <h2>참가비</h2>
     </div>
 
+    <div class="price-box reveal">
+      <div class="price-row">
+        <span class="who"><span class="g m">남</span>남성</span>
+        <span class="won">54,000<small>원</small></span>
+      </div>
+      <div class="price-row">
+        <span class="who"><span class="g f">여</span>여성</span>
+        <span class="won">34,000<small>원</small></span>
+      </div>
+      <p class="price-inc">소개팅 전용 공간 운영·음료·다과<br>및 모든 서비스 포함</p>
+    </div>
+
+    <h3 class="coupon-sub reveal">지금 쓸 수 있는 할인쿠폰</h3>
     <div class="coupon-list reveal">
       <div class="coupon-card">
         <div class="amt">5,000원 할인</div>
