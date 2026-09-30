@@ -1479,26 +1479,26 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       <div class="coupon-card">
         <div class="amt">5,000원 할인</div>
         <div class="name">재참여 할인쿠폰</div>
-        <div class="why">이 자리에서 인연을<br>못 찾으신 분들을,<br>끝까지 책임지고<br>싶어서 만들었어요🙏</div>
+        <div class="why">인연 찾을 때까지<br>함께할게요🙏</div>
       </div>
       <div class="coupon-card">
         <div class="amt">5,000원 할인</div>
         <div class="name">얼리버드 할인쿠폰</div>
-        <div class="why">미리 마음을<br>정해주신 분들께,<br>감사한 마음을<br>담았어요💛</div>
+        <div class="why">미리 신청해주신<br>분들께 드려요💛</div>
       </div>
       <div class="coupon-card">
         <div class="amt">5,000원 할인</div>
         <div class="name">여성전용<br>친구할인 쿠폰</div>
-        <div class="why">혼자 나오기<br>망설여지는 분들이,<br>친구와 함께 편하게<br>오실 수 있도록<br>마련했어요😊</div>
+        <div class="why">친구와 함께<br>편하게 오세요😊</div>
       </div>
       <div class="coupon-card">
         <div class="amt">50% 할인</div>
         <div class="name">마음 적립 쿠폰</div>
-        <div class="why">꾸준히 믿고<br>찾아주신 마음에<br>대한 위밋의<br>작은 진심이에요💕</div>
+        <div class="why">꾸준히 찾아주신<br>분들께 드려요💕</div>
       </div>
     </div>
-    <p class="coupon-note reveal" style="font-size:13.5px; font-weight:700; color:var(--ivory);">얼리버드·친구·재참여 할인쿠폰은 중복 적용돼요</p>
-    <p class="coupon-note reveal" style="margin-top:6px;">마음 적립 쿠폰은 중복 불가예요. 자세한 조건은 카카오톡 채널에서 확인해주세요🫰</p>
+    <p class="coupon-note reveal" style="font-size:13.5px; font-weight:700; color:var(--ivory);">얼리버드·친구·재참여는 중복 적용 OK</p>
+    <p class="coupon-note reveal" style="margin-top:6px;">마음 적립은 단독 사용 · 조건은 채널에서 확인🫰</p>
   </div>
 </section>
 
@@ -1605,7 +1605,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 
 <section class="final">
   <div class="wrap">
-    <h2 class="reveal">망설이는 사이에도,<br>좋은 분들은 여기서 벌써 다른 인연을 만나고 있어요</h2>
+    <h2 class="reveal" id="apply-top">망설이는 사이에도,<br>좋은 분들은 여기서 벌써 다른 인연을 만나고 있어요</h2>
     <p class="reveal">가능한 날짜만 남겨주세요. 잘 맞는 자리가 생기면 먼저 연락드릴게요.</p>
 
 
@@ -1701,7 +1701,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 </footer>
 
 <div class="sticky-cta">
-  <button type="button" class="btn-primary" onclick="fbq('track','Lead',{content_name:'sticky_cta'}); document.getElementById('apply-form').scrollIntoView({behavior:'smooth'});">
+  <button type="button" class="btn-primary" onclick="fbq('track','Lead',{content_name:'sticky_cta'}); scrollToApply();">
     30초만에 신청하기
     <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
@@ -1711,6 +1711,15 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   // ===== 신청폼 링크 중앙관리 =====
   // 노션폼으로 바뀌면 이 한 줄만 바꾸면 히어로 CTA·최종 CTA·달력 일정이 전부 같이 바뀜
   // 네이버폼 링크는 더 이상 안 써요 — CTA들은 이제 페이지 내 신청폼(#apply-form)으로 스크롤됩니다
+
+  // 신청 버튼/달력 → "망설이는 사이에도" 제목이 화면 맨 위(상단 메뉴 바로 아래)에 오게 스크롤
+  function scrollToApply(){
+    const t = document.getElementById('apply-top') || document.getElementById('apply-form');
+    if(!t) return;
+    const nav = document.querySelector('.top-nav');
+    const offset = (nav ? nav.getBoundingClientRect().height : 0) + 24;
+    window.scrollTo({top: t.getBoundingClientRect().top + window.scrollY - offset, behavior:'smooth'});
+  }
 
   // ===== 1차 신청폼 → 구글시트 전송 =====
   // 아래 SHEET_WEB_APP_URL 자리에, 구글 앱스 스크립트 배포 후 나오는 웹앱 URL을 넣으세요.
@@ -1910,8 +1919,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
           if(hasSpecial) cell.classList.add('has-special');
           cell.onclick = () => {
             fbq('track','Lead',{content_name:'calendar_'+m.month+'-'+d});
-            const formEl = document.getElementById('apply-form');
-            if(formEl) formEl.scrollIntoView({behavior:'smooth'});
+            scrollToApply();
           };
         } else if(isClosed){
           cell.classList.add('closed');
