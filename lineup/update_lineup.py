@@ -130,7 +130,8 @@ def update_index(sat, sun):
     t, n3 = re.subn(r'(<span class="lineup-dates">)[^<]*(</span>)', rf"\g<1>{label}\g<2>", t)
     t = re.sub(r'(alt="위밋 )[^"]*( 연령대 라인업")', rf"\g<1>{label}\g<2>", t)
     if not (n1 and n2 and n3):
-        sys.exit("index.html 에서 라인업 섹션 표시를 못 찾았어요.")
+        # 2026-10부터 랜딩에는 라인업을 싣지 않음 — 이미지(인스타용)만 만들고 끝냄
+        return None
     idx.write_text(t, encoding="utf-8")
     return label
 
@@ -140,4 +141,7 @@ if __name__ == "__main__":
     html, sat, sun = build_html(data)
     render(html)
     label = update_index(sat, sun)
-    print(f"완료: {label} 라인업 ({len(data['slots'])}개 시간대), {sun.isoformat()} 까지 노출")
+    if label is None:
+        print("완료: lineup/lineup.jpg (인스타용) 생성 — 랜딩페이지에는 라인업 섹션이 없어서 건드리지 않았어요")
+    else:
+        print(f"완료: {label} 라인업 ({len(data['slots'])}개 시간대), {sun.isoformat()} 까지 노출")

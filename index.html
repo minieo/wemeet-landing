@@ -1262,7 +1262,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 <body>
 
 <nav class="top-nav">
-  <button class="nav-hot" onclick="document.getElementById('calendar-section').scrollIntoView({behavior:'smooth'})">이번주 라인업</button>
+  <button class="nav-hot" onclick="document.getElementById('calendar-section').scrollIntoView({behavior:'smooth'})">신청 가능 일정</button>
   <button onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">왜 위밋?</button>
   <button onclick="document.getElementById('conditions').scrollIntoView({behavior:'smooth'})">참가조건</button>
   <button onclick="document.getElementById('coupons').scrollIntoView({behavior:'smooth'})">참가비</button>
@@ -1584,11 +1584,10 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 
 <section id="calendar-section">
   <div class="wrap">
-    <!-- 주간 연령대 라인업: lineup/update_lineup.py 가 이미지 버전·날짜·노출 종료일을 갱신 -->
-    <div class="lineup" id="lineup" data-lineup-until="2026-10-04">
-      <div class="lineup-head">이번 주 연령대 라인업<span class="lineup-dates">10/3(토) · 10/4(일)</span></div>
-      <img src="lineup/lineup.jpg?v=20261003" alt="위밋 10/3(토) · 10/4(일) 연령대 라인업" width="1080" height="1350">
-      <div class="lineup-foot"><strong class="lineup-em">라인업은 지금까지 선별된 분들의 연령대예요.</strong><br>범위가 조금 달라도 신청서를 보고 잘 맞는 자리로 맞춰드리니 편하게 신청해주세요 :)<br>가능하신 시간으로 아래 날짜를 클릭해서 바로 신청해주시면 됩니다</div>
+    <!-- 연령대 라인업 이미지는 랜딩에서 제외함 (2026-10). 가능한 일정 신청 → 맞는 자리 생기면 연락 방식 -->
+    <div class="lineup">
+      <div class="lineup-head">신청 가능한 일정</div>
+      <div class="lineup-foot"><strong class="lineup-em">가능한 날짜만 골라서 신청해주세요.</strong><br>연령대·취향이 잘 맞는 자리가 생기면<br>위밋에서 먼저 연락드려요 :)<br>아래 날짜를 누르면 신청폼으로 이동해요</div>
     </div>
 
     <div class="cal-head reveal">
@@ -1607,7 +1606,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 <section class="final">
   <div class="wrap">
     <h2 class="reveal">망설이는 사이에도,<br>좋은 분들은 여기서 벌써 다른 인연을 만나고 있어요</h2>
-    <p class="reveal">이번 라인업, 놓치지 마세요.</p>
+    <p class="reveal">가능한 날짜만 남겨주세요. 잘 맞는 자리가 생기면 먼저 연락드릴게요.</p>
 
 
     <form class="apply-form reveal" id="apply-form">
@@ -1624,7 +1623,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       </div>
       <div class="field">
         <label>가능하신 시간대를 모두 선택해주세요 :)</label>
-        <p style="font-size:12px; color:var(--taupe); line-height:1.6; margin-bottom:10px;">가능한 시간대를 많이 고를수록 잘 맞는 자리에 더 빨리 배정돼요!</p>
+        <p style="font-size:12px; color:var(--taupe); line-height:1.6; margin-bottom:10px;">가능한 시간대를 많이 고를수록 잘 맞는 자리가 생겼을 때 더 빨리 연락드릴 수 있어요!</p>
         <div id="af-timeslots-list" style="display:flex; flex-direction:column; gap:8px;"></div>
         <label class="af-timeslot" style="border-style:dashed; margin-top:2px;">
           <input type="checkbox" id="af-waitlist-checkbox" class="af-timeslot-checkbox" value="위의 일정이 맞지 않아 나중에 좋은 자리 있으면 연락주세요">
