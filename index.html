@@ -1430,29 +1430,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   </div>
 </section>
 
-<section id="calendar-section">
-  <div class="wrap">
-    <!-- 주간 연령대 라인업: lineup/update_lineup.py 가 이미지 버전·날짜·노출 종료일을 갱신 -->
-    <div class="lineup" id="lineup" data-lineup-until="2026-10-04">
-      <div class="lineup-head">이번 주 연령대 라인업<span class="lineup-dates">10/3(토) · 10/4(일)</span></div>
-      <img src="lineup/lineup.jpg?v=20261003" alt="위밋 10/3(토) · 10/4(일) 연령대 라인업" width="1080" height="1350">
-      <div class="lineup-foot">라인업은 지금까지 선별된 분들의 연령대예요. 범위가 조금 달라도 신청서를 보고 잘 맞는 자리로 맞춰드리니 편하게 신청해주세요 :)<br>가능하신 시간으로 아래 날짜를 클릭해서 바로 신청해주시면 됩니다</div>
-    </div>
-
-    <div class="cal-head reveal">
-      <span id="cal-month-label">2026년 10월</span>
-    </div>
-    <div class="cal-grid reveal" id="cal-grid">
-      <!-- JS가 채워줌 -->
-    </div>
-
-    <p class="cal-legend reveal">• 진하게 표시된 날짜는 지금 바로 신청 가능해요 (누르면 신청폼으로 이동) · 점선으로 흐리게 표시된 날짜는 추후 신청 예정이에요 · ★는 특집 이벤트예요</p>
-
-    <!-- 요일·시간대가 바뀌면 JS의 EVENT_TIMES / 요일 조건(dow===0||dow===6)만 수정하면 돼요 -->
-  </div>
-</section>
-
-<section class="alt" id="conditions">
+<section id="conditions">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">참가 조건</span>
@@ -1472,7 +1450,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   </div>
 </section>
 
-<section id="coupons">
+<section class="alt" id="coupons">
   <div class="wrap">
     <div class="section-head reveal">
       <h2>참가비 &amp; 할인</h2>
@@ -1516,7 +1494,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   </div>
 </section>
 
-<section class="alt" id="howto">
+<section id="howto">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">이용 방법</span>
@@ -1556,7 +1534,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   </div>
 </section>
 
-<section id="faq">
+<section class="alt" id="faq">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">자주 묻는 질문</span>
@@ -1593,6 +1571,28 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         <div class="faq-a"><p>그럼요! 오히려 혼자 오시는 분들이 대부분이에요🙋 다들 같은 마음으로 오시는 자리라 부담없이, 편안한 분위기로 진행되니까 걱정 안 하셔도 돼요 :)</p></div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="calendar-section">
+  <div class="wrap">
+    <!-- 주간 연령대 라인업: lineup/update_lineup.py 가 이미지 버전·날짜·노출 종료일을 갱신 -->
+    <div class="lineup" id="lineup" data-lineup-until="2026-10-04">
+      <div class="lineup-head">이번 주 연령대 라인업<span class="lineup-dates">10/3(토) · 10/4(일)</span></div>
+      <img src="lineup/lineup.jpg?v=20261003" alt="위밋 10/3(토) · 10/4(일) 연령대 라인업" width="1080" height="1350">
+      <div class="lineup-foot">라인업은 지금까지 선별된 분들의 연령대예요. 범위가 조금 달라도 신청서를 보고 잘 맞는 자리로 맞춰드리니 편하게 신청해주세요 :)<br>가능하신 시간으로 아래 날짜를 클릭해서 바로 신청해주시면 됩니다</div>
+    </div>
+
+    <div class="cal-head reveal">
+      <span id="cal-month-label">2026년 10월</span>
+    </div>
+    <div class="cal-grid reveal" id="cal-grid">
+      <!-- JS가 채워줌 -->
+    </div>
+
+    <p class="cal-legend reveal">• 진하게 표시된 날짜는 지금 바로 신청 가능해요 (누르면 신청폼으로 이동) · 점선으로 흐리게 표시된 날짜는 추후 신청 예정이에요 · ★는 특집 이벤트예요</p>
+
+    <!-- 요일·시간대가 바뀌면 JS의 EVENT_TIMES / 요일 조건(dow===0||dow===6)만 수정하면 돼요 -->
   </div>
 </section>
 
