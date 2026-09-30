@@ -1805,16 +1805,28 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       status.textContent = '';
       status.classList.remove('show');
 
-      fetch(SHEET_WEB_APP_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      }).then(function(){
+      // 앱스 스크립트 응답이 느려서(수 초) 완료 화면은 최대 1.2초 안에 먼저 띄움.
+      // keepalive라 화면을 닫거나 채널로 이동해도 전송은 끝까지 진행됨.
+      var finished = false;
+      function done(){
+        if(finished) return; finished = true;
         fbq('track','CompleteRegistration',{content_name:'apply_form_submit'});
         showApplyDone(submittedName);
         form.reset();
         if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = '1차 신청 제출하기'; }
+      }
+      var fastTimer = setTimeout(done, 1200);
+      fetch(SHEET_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        keepalive: true,
+        body: formData
+      }).then(function(){
+        clearTimeout(fastTimer); done();
       }).catch(function(){
+        clearTimeout(fastTimer);
+        if(finished) return; // 이미 완료 화면이 뜬 뒤면 그대로 둠
+        finished = true;
         status.textContent = '⚠️ 제출 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.';
         status.style.color = 'var(--gold)';
         status.classList.add('show');
