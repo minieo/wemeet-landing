@@ -1255,14 +1255,28 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     color:var(--taupe);
     cursor:pointer;
   }
-  .af-timeslot input{accent-color:var(--gold); flex-shrink:0;}
+  .af-timeslot input{accent-color:var(--gold); flex-shrink:0; width:22px; height:22px; margin:0;}
+  .af-timeslot{gap:12px !important; padding:14px 14px !important; font-size:15px !important; min-height:52px;}
+  .consent-check input{width:22px; height:22px; margin:0; flex-shrink:0; accent-color:var(--gold);}
+  .consent-check{gap:10px;}
+  .consent-box{background:var(--bg-deep); border:1px solid var(--line); border-radius:var(--radius); margin-bottom:10px; font-size:11.5px; color:var(--taupe); line-height:1.7;}
+  .consent-box summary{list-style:none; cursor:pointer; padding:12px 14px; color:var(--ivory); font-weight:700; font-size:12.5px; display:flex; align-items:center; gap:4px;}
+  .consent-box summary::-webkit-details-marker{display:none;}
+  .consent-box summary b{color:var(--gold);}
+  .consent-more{margin-left:auto; font-weight:400; font-size:11.5px; color:var(--taupe); text-decoration:underline; white-space:nowrap;}
+  .consent-box[open] .consent-more{visibility:hidden;}
+  .consent-body{padding:0 14px 14px;}
+  .apply-form label.af-timeslot{display:flex; align-items:center; margin-bottom:0; font-weight:700;}
+  .apply-form label.af-timeslot span{line-height:1.4;}
+  .apply-form label.consent-check{display:flex; align-items:flex-start; margin-bottom:0;}
+  .apply-form label.consent-check span{line-height:1.6;}
   .af-timeslot input:checked ~ span{color:var(--ivory); font-weight:700;}
 </style>
 </head>
 <body>
 
 <nav class="top-nav">
-  <button class="nav-hot" onclick="document.getElementById('calendar-section').scrollIntoView({behavior:'smooth'})">신청 가능 일정</button>
+  <button class="nav-hot" onclick="scrollToApply()">신청하기</button>
   <button onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">왜 위밋?</button>
   <button onclick="document.getElementById('conditions').scrollIntoView({behavior:'smooth'})">참가조건</button>
   <button onclick="document.getElementById('coupons').scrollIntoView({behavior:'smooth'})">참가비</button>
@@ -1444,7 +1458,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       <span class="eyebrow">참가 조건</span>
       <h2>이런 분들과 함께해요</h2>
     </div>
-    <p class="cond-note reveal" style="margin-top:0; margin-bottom:24px;"><span style="color:var(--gold); font-weight:700;">다른 소개팅 업체처럼 신청해주셔도 다 참석하실순 없어요😢</span><br>설문과 서류를 보고 잘 어울리는 분들로 선별해서 매칭해드려요❤️</p>
+    <p class="cond-note reveal" style="margin-top:0; margin-bottom:24px;"><span style="color:var(--gold); font-weight:700;">설문과 서류를 보고, 잘 어울리는 분들끼리만 자리를 만들어요❤️</span><br>그래서 신청하신 모든 분이 바로 참석하시진 못할 수 있어요🙏</p>
 
     <div class="cond-list reveal">
       <div class="cond-row"><span class="k">거주지</span><span class="v">대구 · 경북</span></div>
@@ -1454,7 +1468,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       <div class="cond-row"><span class="k">직업</span><span class="v">소득이 있는 직장인</span></div>
       <div class="cond-row"><span class="k">혼인</span><span class="v">법적 미혼자</span></div>
     </div>
-    <p class="cond-note reveal">선정 연락은 보통 소개팅 2~3일 전까지 드려요. 선정되신 분께만 연락드리니 조금만 기다려주세요🙏</p>
+    <p class="cond-note reveal">확정 연락은 보통 소개팅 <b>5~6일 전부터 2~3일 전 사이</b>에, 선정되신 분들께만 드려요.<br>신청자분들이 많아 선정되지 않은 분들께는 따로 연락드리기 어려운 점 양해 부탁드려요🙏</p>
   </div>
 </section>
 
@@ -1564,7 +1578,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">왜 선정이 안 될까요?<span class="plus">+</span></button>
-        <div class="faq-a"><p>선정 연락은 보통 소개팅 2~3일 전까지 드려요. 혹시 선정 연락을 못 받으셨어도 본인이 부족해서가 아니에요🥲 선착순이 아니라 실제 커플 성사율을 높이기 위한 방식이라, 연령대·취향·가치관 등등 잘 맞는 기수에 맞춰 나중에 연락드릴 수도 있어요. 위밋에서 연락드릴 수도 있지만 시간 되실 때 계속해서 더 신청해주시면 감사하겠습니다🙏 신청은 간단한 1차 설문지만 해주시면 돼요!</p></div>
+        <div class="faq-a"><p>확정 연락은 보통 소개팅 5~6일 전부터 2~3일 전 사이에, 선정되신 분들께만 드려요. 혹시 선정 연락을 못 받으셨어도 본인이 부족해서가 아니에요🥲 선착순이 아니라 실제 커플 성사율을 높이기 위한 방식이라, 연령대·취향·가치관 등등 잘 맞는 기수에 맞춰 나중에 연락드릴 수도 있어요. 위밋에서 연락드릴 수도 있지만 시간 되실 때 계속해서 더 신청해주시면 감사하겠습니다🙏 신청은 간단한 1차 설문지만 해주시면 돼요!</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">연령대는 정해서 모집하지 않나요?<span class="plus">+</span></button>
@@ -1582,26 +1596,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   </div>
 </section>
 
-<section id="calendar-section">
-  <div class="wrap">
-    <!-- 연령대 라인업 이미지는 랜딩에서 제외함 (2026-10). 가능한 일정 신청 → 맞는 자리 생기면 연락 방식 -->
-    <div class="lineup">
-      <div class="lineup-head">신청 가능한 일정</div>
-      <div class="lineup-foot"><strong class="lineup-em">가능한 날짜만 골라서 신청해주세요.</strong><br>연령대·취향이 잘 맞는 자리가 생기면<br>위밋에서 먼저 연락드려요 :)<br>아래 날짜를 누르면 신청폼으로 이동해요</div>
-    </div>
-
-    <div class="cal-head reveal">
-      <span id="cal-month-label">2026년 10월</span>
-    </div>
-    <div class="cal-grid reveal" id="cal-grid">
-      <!-- JS가 채워줌 -->
-    </div>
-
-    <p class="cal-legend reveal">• 진하게 표시된 날짜는 지금 바로 신청 가능해요 (누르면 신청폼으로 이동) · 점선으로 흐리게 표시된 날짜는 추후 신청 예정이에요 · ★는 특집 이벤트예요</p>
-
-    <!-- 요일·시간대가 바뀌면 JS의 EVENT_TIMES / 요일 조건(dow===0||dow===6)만 수정하면 돼요 -->
-  </div>
-</section>
+<!-- 달력 섹션은 2026-10에 제거함 (폼에서 날짜를 한 번만 고르도록). 날짜 데이터는 아래 JS의 MONTHS 배열 그대로 사용 -->
 
 <section class="final">
   <div class="wrap">
@@ -1647,15 +1642,18 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         <small>하이픈(-) 없이 숫자만 정확히 기재해주세요!</small>
       </div>
       <div class="field">
-        <div style="background:var(--bg-deep); border:1px solid var(--line); border-radius:var(--radius); padding:14px 14px; font-size:11.5px; color:var(--taupe); line-height:1.7; margin-bottom:10px;">
-          <strong style="color:var(--ivory); display:block; margin-bottom:6px;">개인정보 수집 및 이용 동의</strong>
-          동의를 거부하실 수 있으나 설문 참여가 불가능합니다.<br>
-          · 수집 항목: 이름, 연락처, 거주지, 직장, 사진, 신분증(주민등록번호 뒷자리 가림), 재직증명서 또는 사업자등록증 등의 서류<br>
-          · 수집·이용 목적: 신청 및 예약 등 고객 요청 처리 및 결과 회신<br>
-          · 보유·이용 기간: 신청 시 수집된 개인정보는 모임 신청일 기준 1년 후 자동 파기
-        </div>
-        <label class="radio-row" style="align-items:flex-start;">
-          <input type="checkbox" name="통합동의" value="동의" required style="margin-top:2px;">
+        <details class="consent-box">
+          <summary><span>개인정보 수집·이용 동의 <b>(필수)</b></span><span class="consent-more">보기</span></summary>
+          <div class="consent-body">
+            동의를 거부하실 수 있으나, 거부 시 신청이 어려워요.<br>
+            · 지금 받는 항목: 이름, 성별, 출생연도, 키, 연락처, 가능한 시간대<br>
+            · 선정 과정에서 추가로 받는 항목: 사진, 거주지, 직장, 신분증(주민번호 뒷자리 가림), 재직증명서 또는 사업자등록증<br>
+            · 이용 목적: 신청 처리, 매칭 및 결과 안내<br>
+            · 보유 기간: 신청일 기준 1년 후 자동 파기
+          </div>
+        </details>
+        <label class="radio-row consent-check" style="align-items:flex-start;">
+          <input type="checkbox" name="통합동의" value="동의" required>
           <span style="color:var(--taupe); font-weight:400; text-align:left;">위 개인정보 수집·이용에 동의하며, 추후 본인사진 / 신분증 / 직업 확인 추가자료 / 이상형 관련 추가 질문에도 동의합니다</span>
         </label>
       </div>
@@ -1885,7 +1883,8 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   }
 
   function renderCalendar(m){
-    const events = buildMonthEvents(m);
+    const events = buildMonthEvents(m); // 폼 시간대(ALL_EVENTS)도 여기서 채워지므로 항상 먼저 실행
+    if(!document.getElementById(m.gridId)) return; // 달력 섹션 없음 → 폼 시간대만 사용
     document.getElementById(m.labelId).textContent = m.label;
     const grid = document.getElementById(m.gridId);
     const dows = ['일','월','화','수','목','금','토'];
