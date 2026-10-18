@@ -1290,6 +1290,27 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   .af-pill input:checked + span{background:var(--ivory); border-color:var(--ivory); color:#fff;}
   .af-pill input:focus-visible + span{outline:2px solid var(--gold); outline-offset:2px;}
   .af-pill em{position:absolute; top:-8px; right:-4px; font-style:normal; font-size:10px; font-weight:700; color:#fff; background:var(--gold); border-radius:999px; padding:2px 6px; white-space:nowrap;}
+
+  /* ---------- 명암 리듬: 어두운 섹션 (왜 위밋 / 신청 구간) ---------- */
+  :root{ --dark: #2A2220; --on-dark: #F7F3EC; --on-dark-sub: rgba(247,243,236,0.62); --on-dark-line: rgba(247,243,236,0.14); }
+  section#why{background:var(--dark); color:var(--on-dark);}
+  #why .section-head h2{color:var(--on-dark);}
+  #why .trust-item .txt strong{color:var(--on-dark);}
+  #why .trust-item .txt span{color:var(--on-dark-sub);}
+  #why .trust-item .check{color:#fff;}
+  #why .compare-table th, #why .compare-table td{border-bottom-color:var(--on-dark-line);}
+  #why .compare-table thead th{color:var(--on-dark); border-bottom-color:rgba(247,243,236,0.5);}
+  #why .compare-table .row-label{color:var(--on-dark);}
+  #why .compare-table td:not(.row-label){color:var(--on-dark-sub);}
+  #why .compare-table tr.best-row td{background:var(--gold); color:#fff; border-bottom-color:var(--gold);}
+  #why .compare-table tr.best-row .row-label{color:#fff;}
+  #why .vs-note{color:rgba(247,243,236,0.45);}
+
+  section.final{background:var(--dark); padding-top:56px;}
+  .final > .wrap > h2{color:var(--on-dark);}
+  .final > .wrap > p{color:var(--on-dark-sub) !important;}
+  .final .apply-form{border-color:transparent; box-shadow:0 10px 30px rgba(0,0,0,0.25);}
+  .final .link-soft{color:var(--on-dark);}
 </style>
 </head>
 <body>
