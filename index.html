@@ -1311,6 +1311,23 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   .final > .wrap > p{color:var(--on-dark-sub) !important;}
   .final .apply-form{border-color:transparent; box-shadow:0 10px 30px rgba(0,0,0,0.25);}
   .final .link-soft{color:var(--on-dark);}
+
+  /* ---------- 신청폼 넓게: 신청 구간에서는 양옆 여백 줄이고, 떠 있는 버튼은 숨김 ---------- */
+  @media (max-width:560px){
+    .final > .wrap{padding-left:14px; padding-right:14px;}
+    .final .apply-form{padding:22px 16px;}
+  }
+  .float-stack{transition:opacity .2s;}
+  body.form-in-view .float-stack{opacity:0; pointer-events:none;}
+
+  /* ---------- 진행 방식: 와인 배경 ---------- */
+  section#howto{background:var(--wine); color:#fff;}
+  #howto .section-head .eyebrow{color:rgba(255,255,255,0.75);}
+  #howto .section-head h2{color:#fff;}
+  #howto .rounds::before{background:linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.15) 100%);}
+  #howto .round .num{background:#fff; border-color:#fff; color:var(--wine);}
+  #howto .round .txt h3{color:#fff;}
+  #howto .round .txt p{color:rgba(255,255,255,0.78);}
 </style>
 </head>
 <body>
@@ -2026,6 +2043,14 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         byDay[key].appendChild(pill);
       });
   }
+  // 신청폼이 화면에 보이는 동안 오른쪽 떠 있는 버튼 숨김 (폼 입력칸 가리지 않게)
+  (function(){
+    var f = document.getElementById('apply-form');
+    if(!f || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ document.body.classList.toggle('form-in-view', e.isIntersecting); });
+    }, {threshold:0.05}).observe(f);
+  })();
   populateApplyTimeslots();
 
   // ===== FAQ 아코디언 =====
