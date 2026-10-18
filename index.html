@@ -1343,6 +1343,20 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   .hero-stats .hs b.kr{font-size:15.5px; line-height:1.4;}
   .hero-badge{flex-wrap:wrap; max-width:100%; row-gap:2px;}
   @media (max-width:370px){ .hero-stats .hs b{font-size:15px;} .hero h1{font-size:30px;} }
+
+  /* ---------- 실제 공간 영상 ---------- */
+  .space-video{margin:0 0 32px; border-radius:14px; overflow:hidden; position:relative; background:#000;}
+  .space-video video{display:block; width:100%; aspect-ratio:4/5; object-fit:cover;}
+  .space-video figcaption{position:absolute; left:0; right:0; bottom:0; padding:28px 16px 14px; background:linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0)); color:#fff;}
+  .space-video figcaption b{display:block; font-size:15px; margin-bottom:2px;}
+  .space-video figcaption span{font-size:12.5px; opacity:0.85;}
+
+  /* ---------- 손글씨 후기 ---------- */
+  .postit-sec{background:var(--bg-deep);}
+  .postit-row{display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding-bottom:6px;}
+  .postit-row img{flex:0 0 78%; max-width:340px; aspect-ratio:3/4; object-fit:cover; border-radius:12px; scroll-snap-align:start; box-shadow:0 6px 18px rgba(34,30,26,0.12);}
+  .postit-note{font-size:12px; color:var(--taupe); text-align:right; margin-top:8px;}
+  .postit-row img{flex-basis:86%;}
 </style>
 </head>
 <body>
@@ -1444,6 +1458,11 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       <h2>왜 위밋에 와야할까요?</h2>
     </div>
 
+    <figure class="space-video reveal">
+      <video src="images/space.mp4" poster="images/space-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="실제 위밋 소개팅 공간 영상"></video>
+      <figcaption><b>실제 위밋 소개팅 공간</b><span>카페 대관 X · 칸막이로 분리된 전용석</span></figcaption>
+    </figure>
+
     <div class="trust-checklist reveal">
       <div class="trust-item">
         <span class="check">✓</span>
@@ -1526,6 +1545,21 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       </table>
     </div>
     <p class="vs-note">※ 공개된 안내·후기 기준, 곳마다 다를 수 있어요</p>
+  </div>
+</section>
+
+<section class="postit-sec" id="postit">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">손글씨 찐후기</span>
+      <h2>참가자분들이 그 자리에서<br>직접 써주신 후기예요</h2>
+    </div>
+    <div class="postit-row reveal">
+      <img src="images/postit-1.jpg" loading="lazy" decoding="async" alt="참가자 손글씨 후기">
+      <img src="images/postit-2.jpg" loading="lazy" decoding="async" alt="참가자 손글씨 후기">
+      <img src="images/postit-3.jpg" loading="lazy" decoding="async" alt="참가자 손글씨 후기">
+    </div>
+    <p class="postit-note">옆으로 넘겨보세요 →</p>
   </div>
 </section>
 
