@@ -1287,9 +1287,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   .apply-form label.af-pill{position:relative; display:block; margin:0; flex:1; min-width:0; cursor:pointer;}
   .af-pill input{position:absolute; opacity:0; width:1px; height:1px; pointer-events:none;}
   .af-pill span{display:flex; align-items:center; justify-content:center; gap:3px; height:44px; border:1.5px solid var(--line); border-radius:999px; background:#fff; font-size:14.5px; font-weight:700; color:var(--ivory); white-space:nowrap; transition:background .15s, border-color .15s, color .15s;}
-  .af-pill span::before{content:"+"; font-weight:400; color:var(--taupe);}
   .af-pill input:checked + span{background:var(--ivory); border-color:var(--ivory); color:#fff;}
-  .af-pill input:checked + span::before{content:"✓"; color:#fff;}
   .af-pill input:focus-visible + span{outline:2px solid var(--gold); outline-offset:2px;}
   .af-pill em{position:absolute; top:-8px; right:-4px; font-style:normal; font-size:10px; font-weight:700; color:#fff; background:var(--gold); border-radius:999px; padding:2px 6px; white-space:nowrap;}
 </style>
@@ -1983,6 +1981,8 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     const list = document.getElementById('af-timeslots-list');
     if(!list) return;
     const dowNames = ['일','월','화','수','목','금','토'];
+    // 화면 표시만 '오후 2시'로 (시트로 가는 값은 '14:00' 그대로)
+    const hourLabel = t => { const h = parseInt(t,10); return (h < 12 ? '오전 ' : '오후 ') + (h % 12 === 0 ? 12 : h % 12) + '시'; };
     const byDay = {};
     ALL_EVENTS
       .slice()
@@ -2001,7 +2001,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         const labelText = ev.month + '/' + ev.day + '(' + dowNames[ev.dow] + ') ' + ev.time + (ev.special ? ' · ' + ev.special : '');
         const pill = document.createElement('label');
         pill.className = 'af-pill';
-        pill.innerHTML = '<input type="checkbox" class="af-timeslot-checkbox" value="' + labelText + '"><span>' + parseInt(ev.time,10) + '시</span>' + (ev.special ? '<em>' + ev.special + '</em>' : '');
+        pill.innerHTML = '<input type="checkbox" class="af-timeslot-checkbox" value="' + labelText + '"><span>' + hourLabel(ev.time) + '</span>' + (ev.special ? '<em>' + ev.special + '</em>' : '');
         byDay[key].appendChild(pill);
       });
   }
