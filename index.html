@@ -1276,6 +1276,22 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   .apply-form label.consent-check{display:flex; align-items:flex-start; margin-bottom:0;}
   .apply-form label.consent-check span{line-height:1.6;}
   .af-timeslot input:checked ~ span{color:var(--ivory); font-weight:700;}
+  /* 날짜별 카드 + 시간 버튼 */
+  .af-day{background:var(--bg-deep); border:1px solid var(--line); border-radius:var(--radius); padding:10px 10px 10px 12px; display:flex; align-items:center; gap:8px;}
+  .af-day-date{flex-shrink:0; width:52px; display:flex; flex-direction:column; line-height:1.15;}
+  .af-day-date b{font-size:17px; font-weight:800; color:var(--ivory); letter-spacing:-0.3px;}
+  .af-day-date small{font-size:11.5px; font-weight:700; color:var(--taupe); margin-top:3px;}
+  #af-timeslots-list{gap:6px !important;}
+  .af-day-date small.sat{color:#3d5a80;} .af-day-date small.sun{color:var(--gold);}
+  .af-day-times{display:flex; gap:6px; flex:1; min-width:0;}
+  .apply-form label.af-pill{position:relative; display:block; margin:0; flex:1; min-width:0; cursor:pointer;}
+  .af-pill input{position:absolute; opacity:0; width:1px; height:1px; pointer-events:none;}
+  .af-pill span{display:flex; align-items:center; justify-content:center; gap:3px; height:44px; border:1.5px solid var(--line); border-radius:999px; background:#fff; font-size:14.5px; font-weight:700; color:var(--ivory); white-space:nowrap; transition:background .15s, border-color .15s, color .15s;}
+  .af-pill span::before{content:"+"; font-weight:400; color:var(--taupe);}
+  .af-pill input:checked + span{background:var(--ivory); border-color:var(--ivory); color:#fff;}
+  .af-pill input:checked + span::before{content:"✓"; color:#fff;}
+  .af-pill input:focus-visible + span{outline:2px solid var(--gold); outline-offset:2px;}
+  .af-pill em{position:absolute; top:-8px; right:-4px; font-style:normal; font-size:10px; font-weight:700; color:#fff; background:var(--gold); border-radius:999px; padding:2px 6px; white-space:nowrap;}
 </style>
 </head>
 <body>
@@ -1965,16 +1981,26 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     const list = document.getElementById('af-timeslots-list');
     if(!list) return;
     const dowNames = ['일','월','화','수','목','금','토'];
+    const byDay = {};
     ALL_EVENTS
       .slice()
       .sort((a,b) => (a.month-b.month) || (a.day-b.day) || a.time.localeCompare(b.time))
       .forEach(ev => {
+        const key = ev.month + '/' + ev.day;
+        if(!byDay[key]){
+          const card = document.createElement('div');
+          card.className = 'af-day';
+          const dowCls = ev.dow === 6 ? 'sat' : (ev.dow === 0 ? 'sun' : '');
+          card.innerHTML = '<div class="af-day-date"><b>' + key + '</b><small class="' + dowCls + '">' + dowNames[ev.dow] + '요일</small></div><div class="af-day-times"></div>';
+          list.appendChild(card);
+          byDay[key] = card.querySelector('.af-day-times');
+        }
+        // 값(value)은 예전과 똑같이 유지 → 구글시트·시트월 계산 그대로
         const labelText = ev.month + '/' + ev.day + '(' + dowNames[ev.dow] + ') ' + ev.time + (ev.special ? ' · ' + ev.special : '');
-        const wrap = document.createElement('label');
-        wrap.className = 'af-timeslot';
-        const shown = ev.month + '/' + ev.day + '(' + dowNames[ev.dow] + ') ' + ev.time;
-        wrap.innerHTML = '<input type="checkbox" class="af-timeslot-checkbox" value="' + labelText + '"><span class="nb">' + shown + '</span>' + (ev.special ? '<em class="af-special">' + ev.special + '</em>' : '');
-        list.appendChild(wrap);
+        const pill = document.createElement('label');
+        pill.className = 'af-pill';
+        pill.innerHTML = '<input type="checkbox" class="af-timeslot-checkbox" value="' + labelText + '"><span>' + parseInt(ev.time,10) + '시</span>' + (ev.special ? '<em>' + ev.special + '</em>' : '');
+        byDay[key].appendChild(pill);
       });
   }
   populateApplyTimeslots();
