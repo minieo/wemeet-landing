@@ -1328,6 +1328,19 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   #howto .round .num{background:#fff; border-color:#fff; color:var(--wine);}
   #howto .round .txt h3{color:#fff;}
   #howto .round .txt p{color:rgba(255,255,255,0.78);}
+
+  /* ---------- 히어로 후킹: 무엇을 하는지 + 숫자 ---------- */
+  .hero h1{font-size:33px; line-height:1.32; margin-bottom:14px;}
+  .hero h1 .hl{color:var(--gold);}
+  .hero-kicker{font-size:15px; font-weight:700; color:var(--ivory); margin-bottom:18px;}
+  .hero-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:18px; max-width:400px;}
+  .hero-stats .hs{background:#fff; border:1px solid var(--line); border-radius:10px; padding:11px 6px; text-align:center;}
+  .hero-stats .hs b{display:block; font-family:var(--serif); font-size:19px; font-weight:800; color:var(--gold); letter-spacing:-0.3px; line-height:1.2;}
+  .hero-stats .hs span{display:block; font-size:11px; color:var(--taupe); margin-top:4px; line-height:1.3; word-break:keep-all;}
+  .hero p.sub{margin-bottom:26px;}
+  @media (max-width:560px){ .hero{padding-top:40px;} .hero-badge{margin-bottom:16px;} }
+  .hero-stats .hs b{font-size:17px;}
+  @media (max-width:370px){ .hero-stats .hs b{font-size:15px;} .hero h1{font-size:30px;} }
 </style>
 </head>
 <body>
@@ -1361,10 +1374,15 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 
 <section class="hero">
   <div class="wrap">
-    <p class="reveal" style="font-size:14px; font-weight:700; color:var(--ivory); margin-bottom:14px;">대구·경북 누적 참가자 <span style="color:var(--gold);">3,000+</span><br>물 좋기로 소문난 프리미엄 소개팅</p>
-    <span class="hero-badge"><span class="nb">❤️ 현실커플 탄생 1위</span> · <span class="nb">대구 · 경북 로테이션 소개팅</span></span>
-    <h1>아무것도 안 하면,<br>아무도 안 생겨요</h1>
-    <p class="sub">위밋에서 내 인연 <span class="nb">만나실 수 있도록</span> <span class="nb">도와드릴게요.</span><br>진정성 있고 좋은 분들만<br>저희가 알아서 선별해드려요.<span class="sub-accent">소개팅 앱처럼 아무나, 결혼정보회사처럼 사무적으로 말고 — 아끼는 지인 소개해주듯 신경써서 자리 만들어 드려요❤️</span></p>
+    <span class="hero-badge"><span class="nb">❤️ 대구 · 경북 로테이션 소개팅</span></span>
+    <h1>검증된 이성 6~8명,<br>하루에 <span class="hl">모두 1:1</span>로<br>만나보세요</h1>
+    <p class="hero-kicker">아무것도 안 하면, 아무도 안 생겨요.</p>
+    <div class="hero-stats">
+      <div class="hs"><b>3,000+</b><span>누적 참가자</span></div>
+      <div class="hs"><b>10~15분</b><span>한 명씩 1:1 대화</span></div>
+      <div class="hs" id="hero-next"><b>-</b><span>가장 빠른 일정</span></div>
+    </div>
+    <p class="sub">서류 확인된 분들만, 저희가 <span class="nb">잘 맞는 분들끼리</span> 자리를 만들어 드려요❤️</p>
 
     <p style="text-align:center; font-weight:700; color:var(--gold); font-size:13.5px; margin-bottom:12px;">📸 실제 현실커플 탄생 찐후기</p>
     <div class="hero-carousel">
@@ -2052,6 +2070,14 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     }, {threshold:0.05}).observe(f);
   })();
   populateApplyTimeslots();
+  // 히어로 "가장 빠른 일정" 칸: 신청 가능한 첫 날짜 자동 표시
+  (function(){
+    var el = document.getElementById('hero-next'); if(!el) return;
+    var ev = ALL_EVENTS.slice().sort(function(a,b){ return (a.month-b.month)||(a.day-b.day); })[0];
+    if(!ev){ el.style.display='none'; return; }
+    var dn = ['일','월','화','수','목','금','토'];
+    el.querySelector('b').textContent = ev.month + '/' + ev.day + '(' + dn[ev.dow] + ')';
+  })();
 
   // ===== FAQ 아코디언 =====
   function toggleFaq(btn){
