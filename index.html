@@ -1289,6 +1289,9 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   .af-pill span{display:flex; align-items:center; justify-content:center; gap:3px; height:44px; border:1.5px solid var(--line); border-radius:999px; background:#fff; font-size:14.5px; font-weight:700; color:var(--ivory); white-space:nowrap; transition:background .15s, border-color .15s, color .15s;}
   .af-pill input:checked + span{background:var(--ivory); border-color:var(--ivory); color:#fff;}
   .af-pill input:focus-visible + span{outline:2px solid var(--gold); outline-offset:2px;}
+  .apply-form label.af-pill.closed{cursor:not-allowed;}
+  .af-pill.closed span{background:transparent; border-style:dashed; color:var(--taupe); font-weight:600;}
+  .af-day.is-closed .af-day-date b{color:var(--taupe);}
   .af-pill em{position:absolute; top:-8px; right:-4px; font-style:normal; font-size:10px; font-weight:700; color:#fff; background:var(--gold); border-radius:999px; padding:2px 6px; white-space:nowrap;}
 
   /* ---------- 명암 리듬: 어두운 섹션 (왜 위밋 / 신청 구간) ---------- */
@@ -1981,6 +1984,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       activeDays: [3, 4, 10, 11, 17, 18, 24, 25, 31],
       bookableDays: [31],
       closedDays: [3, 4, 10, 11, 17, 18, 24, 25],
+      formClosedDays: [24, 25], // 신청폼에 "마감"으로 보여줄 날짜 (closedDays의 부분집합, 선택 불가)
       times: ["14:00", "17:00"],
       specials: {}
     },
@@ -2011,6 +2015,9 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       if(bookable){
         const dow = new Date(m.year, m.month-1, d).getDay();
         events[d].forEach(ev => ALL_EVENTS.push({year:m.year, month:m.month, day:d, dow, time:ev.time, special:ev.special}));
+      } else if(closed && (m.formClosedDays || []).includes(d)){
+        const dow = new Date(m.year, m.month-1, d).getDay();
+        events[d].forEach(ev => ALL_EVENTS.push({year:m.year, month:m.month, day:d, dow, time:ev.time, special:ev.special, closed:true}));
       }
     });
     return events;
@@ -2095,7 +2102,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         const key = ev.month + '/' + ev.day;
         if(!byDay[key]){
           const card = document.createElement('div');
-          card.className = 'af-day';
+          card.className = 'af-day' + (ev.closed ? ' is-closed' : '');
           const dowCls = ev.dow === 6 ? 'sat' : (ev.dow === 0 ? 'sun' : '');
           card.innerHTML = '<div class="af-day-date"><b>' + key + '</b><small class="' + dowCls + '">' + dowNames[ev.dow] + '요일</small></div><div class="af-day-times"></div>';
           list.appendChild(card);
@@ -2104,8 +2111,10 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         // 값(value)은 예전과 똑같이 유지 → 구글시트·시트월 계산 그대로
         const labelText = ev.month + '/' + ev.day + '(' + dowNames[ev.dow] + ') ' + ev.time + (ev.special ? ' · ' + ev.special : '');
         const pill = document.createElement('label');
-        pill.className = 'af-pill';
-        pill.innerHTML = '<input type="checkbox" class="af-timeslot-checkbox" value="' + labelText + '"><span>' + hourLabel(ev.time) + '</span>' + (ev.special ? '<em>' + ev.special + '</em>' : '');
+        pill.className = 'af-pill' + (ev.closed ? ' closed' : '');
+        pill.innerHTML = ev.closed
+          ? '<input type="checkbox" disabled tabindex="-1"><span>' + hourLabel(ev.time) + ' · 마감</span>'
+          : '<input type="checkbox" class="af-timeslot-checkbox" value="' + labelText + '"><span>' + hourLabel(ev.time) + '</span>' + (ev.special ? '<em>' + ev.special + '</em>' : '');
         byDay[key].appendChild(pill);
       });
   }
@@ -2121,7 +2130,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   // 히어로 "가장 빠른 일정" 칸: 신청 가능한 첫 날짜 자동 표시
   (function(){
     var el = document.getElementById('hero-next'); if(!el) return;
-    var ev = ALL_EVENTS.slice().sort(function(a,b){ return (a.month-b.month)||(a.day-b.day); })[0];
+    var ev = ALL_EVENTS.filter(function(e){ return !e.closed; }).sort(function(a,b){ return (a.month-b.month)||(a.day-b.day); })[0];
     if(!ev){ el.style.display='none'; return; }
     var dn = ['일','월','화','수','목','금','토'];
     el.querySelector('b').textContent = ev.month + '/' + ev.day + '(' + dn[ev.dow] + ')';
