@@ -1944,7 +1944,25 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       var finished = false;
       function done(){
         if(finished) return; finished = true;
-        fbq('track','CompleteRegistration',{content_name:'apply_form_submit'});
+        // 같은 창(세션)에서 '다시 신청'으로 재제출하면 신청완료로 중복 집계하지 않고 재신청 이벤트로 따로 기록
+        var alreadyReg = false;
+        try { alreadyReg = sessionStorage.getItem('wm_reg') === '1'; } catch(e){}
+        if(!alreadyReg){
+          // 고급 매칭: 연락처·성별을 픽셀에 넘기면 픽셀이 브라우저에서 SHA-256으로 암호화해서 전송함 (원문은 안 나감)
+          try {
+            var ph = String(formData.get('연락처') || '').replace(/\D/g, '');
+            if(ph.charAt(0) === '0') ph = '82' + ph.slice(1);
+            var gv = formData.get('성별');
+            var um = { country: 'kr' };
+            if(ph.length >= 11) um.ph = ph;
+            if(gv === '남') um.ge = 'm'; else if(gv === '여') um.ge = 'f';
+            fbq('init', '1377010317496207', um);
+          } catch(e){}
+          fbq('track','CompleteRegistration',{content_name:'apply_form_submit'});
+          try { sessionStorage.setItem('wm_reg','1'); } catch(e){}
+        } else {
+          fbq('trackCustom','ReApply',{content_name:'apply_form_resubmit'});
+        }
         showApplyDone(submittedName);
         form.reset();
         if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = '1차 신청 제출하기'; }
