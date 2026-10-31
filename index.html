@@ -1994,6 +1994,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   // - bookableDays: 그중 지금 신청서에서 실제로 고를 수 있는 날짜 (activeDays의 부분집합)
   //   -> bookableDays에도 closedDays에도 없는 날짜는 캘린더에 흐리게 "예정"으로만 보여요 (아직 신청 안 열림)
   // - closedDays: 이미 마감된 날짜 (activeDays의 부분집합) — "마감"으로 표시, 클릭 불가, 신청폼에도 안 나옴
+  // - dayTimes: { day: ["20:00"] } — 그 날짜만 기본 times 대신 이 시간으로 (예: 금요일 저녁 회차)
   // - specials: { day: { "시간": "특집 이름" } } — 해당 날짜·시간에 ★ 특집 표시
   const MONTHS = [
     {
@@ -2009,11 +2010,12 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     {
       year: 2026, month: 11, label: "2026년 11월",
       gridId: "cal-grid-11", labelId: "cal-month-label-11",
-      activeDays: [1, 7, 8, 14, 15],
-      bookableDays: [7, 8, 14, 15],
+      activeDays: [1, 7, 8, 13, 14, 15],
+      bookableDays: [7, 8, 13, 14, 15],
       closedDays: [1],
       formClosedDays: [1], // 이번 주(10/31~11/1) 마감 표시
       times: ["14:00", "17:00"],
+      dayTimes: { 13: ["20:00"] }, // 기본 times와 다른 날만: { 날짜: ["시간", ...] }
       specials: {}
     }
   ];
@@ -2025,7 +2027,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     m.activeDays.forEach(d => {
       const bookable = m.bookableDays.includes(d);
       const closed = (m.closedDays || []).includes(d);
-      events[d] = m.times.map(t => ({
+      events[d] = ((m.dayTimes && m.dayTimes[d]) || m.times).map(t => ({
         time: t,
         bookable,
         closed,
