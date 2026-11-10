@@ -1292,6 +1292,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   .apply-form label.af-pill.closed{cursor:not-allowed;}
   .af-pill.closed span{background:transparent; border-style:dashed; color:var(--taupe); font-weight:600;}
   .af-day.is-closed .af-day-date b{color:var(--taupe);}
+  .af-pill small.af-couples{display:block; margin-top:4px; text-align:center; font-size:11.5px; font-weight:700; color:var(--gold); letter-spacing:-0.2px;}
   .af-pill em{position:absolute; top:-8px; right:-4px; font-style:normal; font-size:10px; font-weight:700; color:#fff; background:var(--gold); border-radius:999px; padding:2px 6px; white-space:nowrap;}
 
   /* ---------- 명암 리듬: 어두운 섹션 (왜 위밋 / 신청 구간) ---------- */
@@ -2014,6 +2015,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       bookableDays: [13, 14, 15, 21, 22],
       closedDays: [1, 7, 8],
       formClosedDays: [7, 8], // 11/7(토)·8(일) 마감 표시
+      couples: { 7: {"14:00": 4, "17:00": 6}, 8: {"14:00": 3, "17:00": 5} }, // 마감 회차 밑에 "💕 N커플 탄생" — 실제 매칭 결과만, 0이면 안 넣기
       times: ["14:00", "17:00"],
       dayTimes: { 13: ["20:00"], 21: ["14:00", "17:00", "20:00"] }, // 기본 times와 다른 날만: { 날짜: ["시간", ...] }
       specials: {}
@@ -2038,7 +2040,8 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         events[d].forEach(ev => ALL_EVENTS.push({year:m.year, month:m.month, day:d, dow, time:ev.time, special:ev.special}));
       } else if(closed && (m.formClosedDays || []).includes(d)){
         const dow = new Date(m.year, m.month-1, d).getDay();
-        events[d].forEach(ev => ALL_EVENTS.push({year:m.year, month:m.month, day:d, dow, time:ev.time, special:ev.special, closed:true}));
+        events[d].forEach(ev => ALL_EVENTS.push({year:m.year, month:m.month, day:d, dow, time:ev.time, special:ev.special, closed:true,
+          couples:(m.couples && m.couples[d] && m.couples[d][ev.time]) || 0}));
       }
     });
     return events;
@@ -2134,7 +2137,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         const pill = document.createElement('label');
         pill.className = 'af-pill' + (ev.closed ? ' closed' : '');
         pill.innerHTML = ev.closed
-          ? '<input type="checkbox" disabled tabindex="-1"><span>' + hourLabel(ev.time) + ' · 마감</span>'
+          ? '<input type="checkbox" disabled tabindex="-1"><span>' + hourLabel(ev.time) + ' · 마감</span>' + (ev.couples > 0 ? '<small class="af-couples">💕 ' + ev.couples + '커플 탄생</small>' : '')
           : '<input type="checkbox" class="af-timeslot-checkbox" value="' + labelText + '"><span>' + hourLabel(ev.time) + '</span>' + (ev.special ? '<em>' + ev.special + '</em>' : '');
         byDay[key].appendChild(pill);
       });
