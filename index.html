@@ -1292,6 +1292,8 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   .apply-form label.af-pill.closed{cursor:not-allowed;}
   .af-pill.closed span{background:transparent; border-style:dashed; color:var(--taupe); font-weight:600;}
   .af-day.is-closed .af-day-date b{color:var(--taupe);}
+  .final p.final-hot{color:#F7F3EC !important; margin-bottom:0 !important; font-weight:600; line-height:1.7;}
+  .final p.final-sub{margin-top:10px !important; font-size:13px !important; opacity:.75;}
   .apply-form .af-hot-note{margin:2px 0 10px !important; padding:12px 14px; border-left:3px solid var(--gold); background:rgba(176,58,46,0.06); border-radius:8px; font-size:13px; font-weight:600; line-height:1.65; color:var(--ivory) !important; letter-spacing:-0.2px;}
   .af-pill small.af-couples{display:block; margin-top:4px; text-align:center; font-size:11.5px; font-weight:700; color:var(--gold); letter-spacing:-0.2px;}
   .af-pill em{position:absolute; top:-8px; right:-4px; font-style:normal; font-size:10px; font-weight:700; color:#fff; background:var(--gold); border-radius:999px; padding:2px 6px; white-space:nowrap;}
@@ -1314,6 +1316,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   section.final{background:var(--dark); padding-top:56px;}
   .final > .wrap > h2{color:var(--on-dark);}
   .final > .wrap > p{color:var(--on-dark-sub) !important;}
+  .final > .wrap > p.final-hot{color:var(--on-dark) !important;}
   .final .apply-form{border-color:transparent; box-shadow:0 10px 30px rgba(0,0,0,0.25);}
   .final .link-soft{color:var(--on-dark);}
 
@@ -1727,7 +1730,8 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 <section class="final">
   <div class="wrap">
     <h2 class="reveal" id="apply-top">망설이는 사이에도,<br>좋은 분들은 여기서 벌써<br>다른 인연을 만나고 있어요</h2>
-    <p class="reveal">가능한 날짜만 남겨주세요.<br>잘 맞는 자리가 생기면 <span class="nb">먼저 연락드릴게요.</span></p>
+    <p class="reveal final-hot">좋은 분들이 많이 신청해주셔서,<br>기수를 늘려도 <span class="nb">마감이 빨라지고 있어요🥹</span><br>미리 신청해주시면 그만큼 <span class="nb">더 잘 맞는 자리로 준비해드릴게요💛</span></p>
+    <p class="reveal final-sub">가능한 날짜 남겨주시면 <span class="nb">먼저 연락드릴게요</span></p>
 
 
     <form class="apply-form reveal" id="apply-form">
@@ -1744,7 +1748,6 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       </div>
       <div class="field">
         <label>가능하신 시간대를 모두 선택해주세요 :)</label>
-        <p class="af-hot-note">좋은 분들이 많이 신청해주셔서,<br>기수를 늘려도 <span class="nb">마감이 빨라지고 있어요🥹</span><br>미리 신청해주시면 그만큼 <span class="nb">더 잘 맞는 자리로 준비해드릴게요💛</span></p>
         <p style="font-size:12px; color:var(--taupe); line-height:1.6; margin-bottom:10px;">가능한 시간을 넉넉히 골라주시면,<br><span class="nb">제일 잘 어울릴 만한 자리로</span> <span class="nb">배정해드릴 거예요 :)</span></p>
         <div id="af-timeslots-list" style="display:flex; flex-direction:column; gap:8px;"></div>
         <label class="af-timeslot" style="border-style:dashed; margin-top:2px;">
