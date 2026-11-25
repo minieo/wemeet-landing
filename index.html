@@ -1328,6 +1328,9 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   }
   .float-stack{transition:opacity .2s;}
   body.form-in-view .float-stack{opacity:0; pointer-events:none;}
+  /* 신청폼이 보이는 동안엔 하단 '30초만에 신청하기'도 숨김 (입력칸 가림 + 중복 클릭 방지) */
+  .sticky-cta{transition:transform .25s, opacity .2s;}
+  body.form-in-view .sticky-cta{transform:translateY(110%); opacity:0; pointer-events:none;}
 
   /* ---------- 진행 방식: 와인 배경 ---------- */
   section#howto{background:var(--wine); color:#fff;}
@@ -1772,6 +1775,8 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
         <input type="tel" id="af-phone" name="연락처" placeholder="예: 01012345678" required>
         <small>하이픈(-) 없이 숫자만 정확히 기재해주세요!</small>
       </div>
+      <input type="hidden" id="af-src" name="유입경로">
+      <input type="hidden" id="af-adname" name="광고명">
       <div class="field">
         <details class="consent-box">
           <summary><span>개인정보 수집·이용 동의 <b>(필수)</b></span><span class="consent-more">보기</span></summary>
@@ -1817,7 +1822,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
     </div>
 
 
-    <a href="https://naver.me/FBaKfz0P" id="link-1on1-2" class="link-soft reveal" onclick="fbq('track','Lead',{content_name:'1on1_link_final'});">로테이션이 부담스럽다면, 1:1 매칭부터</a>
+    <a href="https://naver.me/FBaKfz0P" id="link-1on1-2" class="link-soft reveal" onclick="fbq('trackCustom','OneOnOneClick',{content_name:'1on1_link_final'});">로테이션이 부담스럽다면, 1:1 매칭부터</a>
     <p class="reveal" style="margin-top:28px; font-size:12.5px; color:var(--taupe); line-height:1.7;">P.S. 고민만 하다가 좋은 자리를 놓칠 수 있어요.<br>신청하셔도 괜찮은 자리가 안 될 것 같으면<br>선정해드리지 않으니 걱정하지 마세요.</p>
   </div>
 </section>
@@ -1832,7 +1837,7 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
 </footer>
 
 <div class="sticky-cta">
-  <button type="button" class="btn-primary" onclick="fbq('track','Lead',{content_name:'sticky_cta'}); scrollToApply();">
+  <button type="button" class="btn-primary" onclick="trackLeadOnce('sticky_cta'); scrollToApply();">
     30초만에 신청하기
     <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
@@ -1842,6 +1847,39 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
   // ===== 신청폼 링크 중앙관리 =====
   // 노션폼으로 바뀌면 이 한 줄만 바꾸면 히어로 CTA·최종 CTA·달력 일정이 전부 같이 바뀜
   // 네이버폼 링크는 더 이상 안 써요 — CTA들은 이제 페이지 내 신청폼(#apply-form)으로 스크롤됩니다
+
+  // ===== Lead(신청하기 버튼 클릭)는 한 사람(같은 창)당 1번만 집계 =====
+  function trackLeadOnce(name){
+    var seen = false;
+    try { seen = sessionStorage.getItem('wm_lead') === '1'; } catch(e){}
+    if(seen) return;
+    fbq('track','Lead',{content_name:name});
+    try { sessionStorage.setItem('wm_lead','1'); } catch(e){}
+  }
+
+  // ===== 유입경로 기록: 처음 들어온 링크의 utm 값을 기억했다가 신청서와 같이 시트로 보냄 =====
+  // 광고 링크 예: ?utm_source=meta&utm_medium=paid&utm_content={{ad.name}}
+  // 인스타 프로필 링크 예: ?utm_source=insta_bio
+  var WM_SRC = (function(){
+    var KEY = 'wm_src', saved = null;
+    try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e){}
+    var q = new URLSearchParams(location.search);
+    var src = q.get('utm_source'), ad = q.get('utm_content') || q.get('utm_campaign') || '';
+    if(!src && q.get('fbclid')) src = 'meta(utm없음)';
+    if(src){
+      var cur = { src: src + (q.get('utm_medium') ? '/' + q.get('utm_medium') : ''), ad: ad, at: Date.now() };
+      try { localStorage.setItem(KEY, JSON.stringify(cur)); } catch(e){}
+      return cur;
+    }
+    // utm이 없으면 7일 안에 utm 달고 들어온 기록을 씀 (광고 보고 나중에 다시 들어온 경우)
+    if(saved && Date.now() - saved.at < 7*24*3600*1000){ return { src: saved.src + '(재방문)', ad: saved.ad, at: saved.at }; }
+    var ua = navigator.userAgent || '';
+    var ref = '';
+    try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch(e){}
+    if(/Instagram/i.test(ua)) return { src: 'instagram(utm없음)', ad: '' };
+    if(/KAKAOTALK/i.test(ua)) return { src: 'kakaotalk', ad: '' };
+    return { src: ref || 'direct', ad: '' };
+  })();
 
   // 신청 버튼/달력 → "망설이는 사이에도" 제목이 화면 맨 위(상단 메뉴 바로 아래)에 오게 스크롤
   function scrollToApply(){
@@ -1939,6 +1977,9 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
       const pickedDate = checkedSlots.some(function(v){ return /^\d{1,2}\//.test(v); });
       document.getElementById('af-waitlist-hidden').value = (waitlistBox && waitlistBox.checked && !pickedDate) ? 'Y' : '';
 
+      document.getElementById('af-src').value = WM_SRC.src || '';
+      document.getElementById('af-adname').value = WM_SRC.ad || '';
+
       const submittedName = document.getElementById('af-name').value;
       const formData = new FormData(form);
 
@@ -1965,7 +2006,16 @@ src="https://www.facebook.com/tr?id=1377010317496207&ev=PageView&noscript=1"
             if(gv === '남') um.ge = 'm'; else if(gv === '여') um.ge = 'f';
             fbq('init', '1377010317496207', um);
           } catch(e){}
-          fbq('track','CompleteRegistration',{content_name:'apply_form_submit'});
+          // 성별·연령대·대기신청·유입경로를 같이 보냄 → 이벤트 관리자에서 '여성 신청완료' 같은 맞춤 전환을 만들 수 있음
+          var by = parseInt(formData.get('출생연도'), 10), ageGroup = '';
+          if(by){ var b5 = by - (by % 5); ageGroup = String(b5).slice(2) + '~' + String(b5 + 4).slice(2) + '년생'; } // 예: 1996 → '95~99년생'
+          fbq('track','CompleteRegistration',{
+            content_name:'apply_form_submit',
+            gender: gv === '여' ? 'f' : (gv === '남' ? 'm' : ''),
+            age_group: ageGroup,
+            waitlist: formData.get('대기신청') === 'Y' ? 'Y' : 'N',
+            traffic_src: WM_SRC.src || ''
+          });
           try { sessionStorage.setItem('wm_reg','1'); } catch(e){}
         } else {
           fbq('trackCustom','ReApply',{content_name:'apply_form_resubmit'});
